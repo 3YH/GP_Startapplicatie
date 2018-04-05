@@ -30,6 +30,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 14px;                                        /*toegevoegd tov psk                */
         font-weight: 400;                                       /*toegevoegd tov psk                */
       }
+       [verborgen]{
+        display: none;  /* als verborgen true is dan ..     */
+        display: none;							/* onzichtbaar maken                */
+      }
 
       app-drawer {                                                   /*toegevoegd tov psk */
          --app-drawer-content-container: {
@@ -37,51 +41,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          }
        }
       .toolbar {
-        background: var(--app-blue);
-        color: white;
+        background: #F5F5F5;
         height: 56px;                                           /* to have a fixed height */
       }
 
-      #toolbarlogo {
-        height: 37px;
-        background: white;
-        padding: 4px;                                           /* to adjust the icon position */
-        padding-left: 11px;                                     /* to adjust the icon position */
+      .toolbar a{
+        padding: 0 20px;  
+        color:fff;
+        font-size: 16px;
+        text-decoration: none;
       }
-
-      .drawer-list {
-        margin: 0 20px;
-        font-size: 14px;				                        /*toegevoegd tov psk */
-        font-weight: 400;                                       /*toegevoegd tov psk */
-       }
-
-       .drawer-list a {
-         display: block;
-         padding: 0 16px;
-         text-decoration: none;
-         color: black;
-         line-height: 40px;
-      }
-
-      .drawer-list a.iron-selected {
-        color: #3f51b5;							/* blue-ish, gewijzigd tov psk      */
-        color: var(--app-blue);
-        font-weight: bold;
-      }
-
-      .drawer-list a[verborgen] {               /* toegevoegd tov PSK               */
-                        				        /* als verborgen true is dan ..     */
-        display: none;							/* onzichtbaar maken                */
-      }
-
-      scheduler-component[verborgen] {               /* toegevoegd tov PSK               */
-                        				        /* als verborgen true is dan ..     */
-        display: none;							/* onzichtbaar maken                */
-      }
-
-      paper-material[verborgen] {               /* toegevoegd tov PSK               */
-                        				        /* als verborgen true is dan ..     */
-        display: none;							/* onzichtbaar maken                */
+      .toolbar a:visited{
+        color: #000;
       }
 
       paper-material {
@@ -89,6 +60,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: calc(98% - 132px);
         margin: 16px auto 16px auto;
         background: var(--app-lightgray);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
     </style>
 
@@ -123,65 +98,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       data="{{_ar_subsubroute_data}}">
     </app-route>
 
-
     <!-- Main Toolbar -->
-    <app-drawer-layout>
- 	  <app-drawer slot="drawer">
- 	    <!--  _ar_page bepaald welk menu geselecteerd is.
- 			  het menu dat de gebruiker klikt veroorzaakt een andere url
- 			  deze url wordt door <app-location> en <app-route> omgezet in variabelen
- 			  _ar_route , _ar_route_data en _ar_subroute
- 			  let op: _ar_page wordt niet door de selectie gewijzigd maar
- 					  vanuit de URL via een observer functie
- 					  er is dus een sterke gelijkenis tussen _ar_page en de URL
- 					  met name URL "xx/yy"  wordt _ar_page "xx_yy" maar ook
- 						       URL "/"      wordt _ar_page "home" en
- 						       overige URL  wordt _ar_page "view404".
- 		-->
- 		<!-- blue (empty) toolbar in menu -->
-        <app-toolbar class="toolbar">
-          <img id="toolbarlogo" src="../../images/hu_logo.png" alt="HU" />
-        </app-toolbar>
-        <iron-selector selected="[[_ar_page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="home" href$="[[_c_baseURL]]">
-            <iron-icon icon="home"></iron-icon>
+    <app-toolbar class="toolbar" verborgen$="[[_are_strings_equal(_rol, 'undefined')]]">
+        <a name="home" href$="[[_c_baseURL]]">
             <span>Home</span>
           </a>
-
-          <!-- altijd beschikbaar -->
-          <a name="systeem_instellen_systeemdatum" href$="[[_c_baseURL]]systeem_instellen_systeemdatum" >
-            <iron-icon icon="icons:today"></iron-icon>
-            <span>(test) Instellen systeemdatum</span>
-          </a>
-
-          <a name="login" href$="[[_c_baseURL]]login"  verborgen$="[[!_are_strings_equal(_rol, 'undefined')]]">
-            <iron-icon icon="account-box"></iron-icon>
-            <span>Inloggen</span>
-          </a>
-
-          <a name="logout" href$="[[_c_baseURL]]logout"  verborgen$="[[_are_strings_equal(_rol, 'undefined')]]">
-            <iron-icon icon="account-box"></iron-icon>
-            <span>Uitloggen</span>
-          </a>
-
-          <!-- beschikbaar voor docent -->
-
           
-          <!-- beschikbaar voor student -->
-          <a name="student_medestudenten" href$="[[_c_baseURL]]student_medestudenten"  verborgen$="[[!_are_strings_equal(_rol, 'student')]]">
-            <iron-icon icon="social:group"></iron-icon>
-            <span>Toon medestudenten</span>
-          </a>
-        </iron-selector>
-      </app-drawer>
+      <a name="systeem_instellen_systeemdatum" href$="[[_c_baseURL]]systeem_instellen_systeemdatum" >
+        <span>Instellen systeemdatum</span>
+      </a> 
+
+      <span class="systdate">[[_ar_selected_object.title]] ([[_systeemdatumlokaal]])</span>
+      <a name="student_medestudenten" href$="[[_c_baseURL]]student_medestudenten"  verborgen$="[[!_are_strings_equal(_rol, 'student')]]">
+          <span>Toon medestudenten</span>
+      </a>
+
+        <a name="logout" href$="[[_c_baseURL]]logout"  verborgen$="[[_are_strings_equal(_rol, 'undefined')]]">
+          <span>Uitloggen</span>
+        </a>
+    </app-toolbar>
 
       <!-- Main Content -->
-      <!-- blue title toolbar in menu -->
-      <app-toolbar class="toolbar">
-        <paper-icon-button  icon="menu" drawer-toggle></paper-icon-button>
-        <span>[[_ar_selected_object.title]] ([[_systeemdatumlokaal]])</span>
-      </app-toolbar>
-
+    
       <iron-pages
         attr-for-selected="page-name"
         selected="[[_ar_page]]"
@@ -198,9 +136,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- sections voor iedereen -->
       
         <!-- element$="none" of weglaten van element$ geeft beide aan dat er geen polymerElement gebruikt zal gaan worden -->
-        <section page-name="home" title="HOME" element$="none" >
+        <section page-name="home" title="HOME" element$="none">
           <paper-material elevation="1" style="max-width: 280px;" verborgen$="[[!_are_strings_equal(_rol, 'undefined')]]">
-              <my-login username="{{_username}}" rol="{{_rol}}" ></my-login>
+              <my-login username="{{_username}}" rol="{{_rol}}"></my-login>
             </paper-material>
             <!-- Student rooster -->
             <scheduler-component 
@@ -210,16 +148,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               {"title" : "event1","start" : "2018-04-04"},
               {"title" : "event2","start" : "2018-04-06T12:30:00","end" : "2018-04-05"},
               {"title" : "event3","start" : "2018-04-15T12:30:00"}]'
-              header='{"center":"title","left":"prev,next,today","right":"month,agendaWeek,agendaDay"}'
+              header='{"center":"title","left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
               verborgen$="[[!_are_strings_equal(_rol, 'student')]]">
               </scheduler-component>
 
               <!-- Docent rooster -->
               <scheduler-component
-              viewRender
               verborgen$="[[!_are_strings_equal(_rol, 'docent')]]" 
               default-view="agendaWeek"
-              header='{"center":"title","left":"prev,next,today","right":"month,agendaWeek,agendaDay"}'
+              header='{"center":"title","left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
               height=100%
               min-time="07:00:00" max-time="20:00:00" 
               events='[
@@ -259,9 +196,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <section page-name="logout"
                    title="UITLOGGEN"
                    element="my-logout">
-            <paper-material elevation="1">
+           
               <my-logout rol="{{_rol}}"></my-logout>
-            </paper-material>
+           
           </section>
 
 <!-- sections voor docent -->
