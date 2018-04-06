@@ -132,10 +132,11 @@
         },
 
         _go_home: function() {
-          setTimeout(function () {
-            console.log("Test calendar")
-            fullCalendar('rerenderEvents');
-            }, 2000);
+          //Wordt uitgevoerd 2 sec na inloggen:
+          // setTimeout(function () { 
+          //   console.log("Test calendar")
+          //   this.eventRender()
+          //   }, 2000);
           var lApp = document.querySelector('my-app');  //het polymer element <my-app>
           var lAppRouter = lApp.$.approuter;            // het html-element <app-route> met id=approuter
           lAppRouter.data={page: ""};                   // vul het data attribute met de homepage url

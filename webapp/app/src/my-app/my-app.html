@@ -52,10 +52,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-decoration: none;
         color: #000;
       }
+
       .toolbar a:visited{
         color: #000;
       }
-
+     
       paper-material {
         padding: 16px 16px 16px  16px;
         width: calc(98% - 132px);
@@ -75,6 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           id toegevoegd zodat element ook in andere polymerElementen benaderbaar wordt
           middels: document.querySelector('my-app').$.approuter.data={page: "xx"}
     -->
+
     <app-route id="approuter"
       route="{{_ar_route}}"
       pattern="/:page"
@@ -101,6 +103,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <!-- Main Toolbar -->
     <app-toolbar class="toolbar" verborgen$="[[_are_strings_equal(_rol, 'undefined')]]">
+     
+      
         <a name="home" href$="[[_c_baseURL]]">
             <span>Home</span>
           </a>
@@ -109,6 +113,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <span>Instellen systeemdatum</span>
       </a> 
 
+    <div class="right">
       <span class="systdate">[[_ar_selected_object.title]] ([[_systeemdatumlokaal]])</span>
       <a name="student_medestudenten" href$="[[_c_baseURL]]student_medestudenten"  verborgen$="[[!_are_strings_equal(_rol, 'student')]]">
           <span>Toon medestudenten</span>
@@ -117,6 +122,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <a name="logout" href$="[[_c_baseURL]]logout"  verborgen$="[[_are_strings_equal(_rol, 'undefined')]]">
           <span>Uitloggen</span>
         </a>
+      </div>
     </app-toolbar>
 
       <!-- Main Content -->
@@ -142,6 +148,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <my-login username="{{_username}}" rol="{{_rol}}"></my-login>
             </paper-material>
             <!-- Student rooster -->
+            
             <scheduler-component 
             default-view="agendaWeek"
             max-time="18:00:00" min-time="07:00:00"
@@ -152,14 +159,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               header='{"center":"title","left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
               verborgen$="[[!_are_strings_equal(_rol, 'student')]]">
               </scheduler-component>
-
               <!-- Docent rooster -->
+              <paper-dialog id="dialog">
+                <p>This is it</p>
+              
+              </paper-dialog>
               <scheduler-component
+              on-event-click="toggleDialog"
               verborgen$="[[!_are_strings_equal(_rol, 'docent')]]" 
               default-view="agendaWeek"
               header='{"center":"title","left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
               height=100%
-              onclick="plain.open()"
               min-time="07:00:00" max-time="20:00:00" 
               events='[
                 {"title" : "event1", "start" : "2018-04-06T10:00:00", "end" : "2018-04-06T12:30:00"},
@@ -167,12 +177,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 ]'
                 >
                 </scheduler-component>
-                <simple-overlay id="backdrop" with-backdrop scroll-action="lock">
-                  <p>Hello world!</p>
-                  <button>Button</button>
-                  <button onclick="backdrop.close()">Close</button>
-                </simple-overlay>
-                
         </section>
 
         <section page-name="systeem_instellen_systeemdatum"
@@ -414,6 +418,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	      }
 	      return lokaledatumstring;
         },
+        
+        toggleDialog: function() {
+          console.log("Test")
+            this.$.dialog.toggle();
+        }
        
       });   
       

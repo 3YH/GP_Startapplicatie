@@ -22,7 +22,8 @@
     "mp-calendar": "mpachnis/mp-calendar#^2.0.0",
     "scheduler-component": "HaithemMosbahi/scheduler-component#^1.6.0",
     "iron-lazy-pages": "TimvdLippe/iron-lazy-pages#^2.1.1",
-    "iron-overlay-behavior": "PolymerElements/iron-overlay-behavior#^2.3.3"
+    "iron-overlay-behavior": "PolymerElements/iron-overlay-behavior#^2.3.3",
+    "paper-dialog": "PolymerElements/paper-dialog#^2.1.1"
   },
   "devDependencies": {},
   "ignore": [],
