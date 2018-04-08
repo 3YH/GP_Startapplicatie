@@ -57,6 +57,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: #000;
       }
      
+     .dialog-header{
+       min-width: 800px;
+       position: relative;
+       height: 70px;
+       background-color: #00A1E1;
+       color: #fff;
+       padding: 0px;
+       display: flex;
+       flex-direction: row;
+       margin:0;
+     }
+
+     .dialog-header .icon{
+       background-color: #40B9E9;
+       width: 70px;
+       height: 100%;
+       font-size: 1.5rem;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       --iron-icon-height: 30px;
+      --iron-icon-width: 30px;
+     }
+
+     .content{
+      padding: 0 0 0 10px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+     }
+
+     .dialog-header h1{
+       margin: 0 0 10px 0;
+       font-size: 1.6rem;
+     }
+
+     .dialog-header h3{
+       margin: 0;
+       font-size: 1.4rem; 
+       font-weight: 300;
+     }
+
+     .date-header{
+       background-color: #E1E1E1;
+       margin:0;
+       padding: 15px 10px;
+     }
+
+     .date-header h2{
+      color:rgba(0, 0, 0, 0.55);
+      margin:0;
+      font-weight:400;
+     }
+
       paper-material {
         padding: 16px 16px 16px  16px;
         width: calc(98% - 132px);
@@ -103,8 +157,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <!-- Main Toolbar -->
     <app-toolbar class="toolbar" verborgen$="[[_are_strings_equal(_rol, 'undefined')]]">
-     
-      
         <a name="home" href$="[[_c_baseURL]]">
             <span>Home</span>
           </a>
@@ -160,8 +212,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               verborgen$="[[!_are_strings_equal(_rol, 'student')]]">
               </scheduler-component>
               <!-- Docent rooster -->
-              <paper-dialog id="dialog">
-                <p>This is it</p>
+              <paper-dialog with-backdrop id="dialog">
+                <div class="dialog-header">
+                  <div class="icon">
+                      <iron-icon icon="icons:query-builder"></iron-icon>
+                  </div>
+                  <div class="content">
+                  <h1>OO Design & Construction_Werkcollege</h1>
+                  <h3>Werkcollege</h3>
+                </div>
+                </div>
+                <div class="date-header">
+                  <h2>Dinsdag 20 Februari 2018</h2>
+                </div>
               
               </paper-dialog>
               <scheduler-component
