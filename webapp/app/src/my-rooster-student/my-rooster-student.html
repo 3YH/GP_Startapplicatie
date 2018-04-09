@@ -1,0 +1,185 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<dom-module id="my-rooster-student">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply --paper-font-body1;
+      }
+
+        
+     .dialog-header{
+       min-width: 800px;
+       position: relative;
+       height: 70px;
+       background-color: #00A1E1;
+       color: #fff;
+       padding: 0px;
+       display: flex;
+       flex-direction: row;
+       margin:0;
+     }
+
+     .dialog-header .icon{
+       background-color: #40B9E9;
+       width: 70px;
+       height: 100%;
+       font-size: 1.5rem;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       --iron-icon-height: 30px;
+      --iron-icon-width: 30px;
+     }
+
+     .title{
+      padding: 0 0 0 10px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+     }
+
+     .dialog-header h1{
+       margin: 0 0 10px 0;
+       font-size: 1.6rem;
+     }
+
+     .dialog-header h3{
+       margin: 0;
+       font-size: 1.4rem; 
+       font-weight: 300;
+     }
+
+     .date-header{
+       background-color: #E1E1E1;
+       margin:0;
+       padding: 15px 10px;
+     }
+
+     .date-header h2{
+      color:rgba(0, 0, 0, 0.55);
+      margin:0;
+      font-weight:400;
+     }
+
+     .date-header h2 span{
+       float: right;
+       font-size:1.15rem;
+     }
+
+     .dialog-content{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      background-color: #EEEEEE;
+      margin:0;
+      padding: 15px 10px;
+     }
+
+   .dialog-content h3{
+       margin:0;
+       padding: 0 0 15px 2px;
+       text-transform: uppercase;
+       color:rgba(0, 0, 0, 0.55);
+     }
+
+     .dialog-content .content-left{
+       margin-right: 30px;
+       width: 400px;
+     }
+
+     .dialog-content .content-right{
+       width: 350px;
+     }
+
+     .dialog-content .content-card{
+       border-radius: 3px;
+       position: relative;
+       background-color: #fff;
+       @apply --shadow-elevation-2dp;
+     }
+    </style>
+    <paper-dialog with-backdrop id="dialog">
+      <div class="dialog-header">
+        <div class="icon">
+          <iron-icon icon="icons:query-builder"></iron-icon>
+        </div>
+        <div class="title">
+          <h1>OO Design & Construction_Werkcollege</h1>
+          <h3>Werkcollege</h3>
+        </div>
+      </div>
+      <div class="date-header">
+        <h2>Dinsdag 20 Februari 2018
+          <span>09:00 - 13:00</span>
+        </h2>
+      </div>
+      <div class="dialog-content">
+        <div class="content-left">
+          <h3>Lesinformatie</h3>
+          <div class="content-card">
+            <b>{{_username}}}</b>
+          </div>
+        </div>
+        <div class="content-right">
+          <h3>Absentie</h3>
+          <div class="content-card">
+            <b>Cursuscode</b>
+          </div>
+        </div>
+      </div>
+    </paper-dialog>
+    <scheduler-component on-event-click="toggleDialog" default-view="agendaWeek" header='{"center":"title","left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
+      height=100% min-time="07:00:00" max-time="20:00:00" events='[
+          {"title" : "event1", "start" : "2018-04-10T10:00:00", "end" : "2018-04-10T12:30:00"},
+          {"title" : "event2", "start" : "2018-04-11T12:30:00", "end" : "2018-04-11T17:30:00"}
+          ]'>
+    </scheduler-component>
+
+  </template>
+
+  <script>
+    (function () {
+      'use strict';
+      /* _xxxx private              : geen external data binding      - geen notify
+         _c_xx private constant     : geen external binding, constant - geen notify
+         c_xx  public constant      : one way external databinding [[c_xx]] - geen notify nodig
+         xxxx  public               : two way external databinding {{xxxx}} - notify nodig
+      */
+      Polymer({
+        is: 'my-rooster-student',
+
+        properties: {
+          rol: {
+            type: String,
+            value: "undefined",
+            notify: true,
+          },
+        },
+
+
+        _go_home: function () {
+          var lApp = document.querySelector('my-app'); //het polymer element <my-app>
+          var lAppRouter = lApp.$.approuter; // het html-element <app-route> met id=approuter
+          lAppRouter.data = {
+            page: ""
+          }; // vul het data attribute met de homepage url
+          // door de two way binding in <app-route> en <app-location>
+          // zal ook de url echt wijzigen
+        },
+
+        toggleDialog: function () {
+          console.log("Test")
+          this.$.dialog.toggle();
+        }
+      });
+    })();
+  </script>
+</dom-module>

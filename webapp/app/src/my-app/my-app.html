@@ -56,70 +56,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .toolbar a:visited{
         color: #000;
       }
-     
-     .dialog-header{
-       min-width: 800px;
-       position: relative;
-       height: 70px;
-       background-color: #00A1E1;
-       color: #fff;
-       padding: 0px;
-       display: flex;
-       flex-direction: row;
-       margin:0;
-     }
 
-     .dialog-header .icon{
-       background-color: #40B9E9;
-       width: 70px;
-       height: 100%;
-       font-size: 1.5rem;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       --iron-icon-height: 30px;
-      --iron-icon-width: 30px;
+     .login paper-material{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      max-width: 280px;
+      transform: translate(-50%, -50%);
      }
-
-     .content{
-      padding: 0 0 0 10px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-     }
-
-     .dialog-header h1{
-       margin: 0 0 10px 0;
-       font-size: 1.6rem;
-     }
-
-     .dialog-header h3{
-       margin: 0;
-       font-size: 1.4rem; 
-       font-weight: 300;
-     }
-
-     .date-header{
-       background-color: #E1E1E1;
-       margin:0;
-       padding: 15px 10px;
-     }
-
-     .date-header h2{
-      color:rgba(0, 0, 0, 0.55);
-      margin:0;
-      font-weight:400;
-     }
-
       paper-material {
         padding: 16px 16px 16px  16px;
         width: calc(98% - 132px);
         margin: 16px auto 16px auto;
         background: var(--app-lightgray);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
       }
     </style>
 
@@ -171,6 +120,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span>Toon medestudenten</span>
       </a>
 
+      <a name="student_overzicht" href$="[[_c_baseURL]]student_overzicht"  verborgen$="[[!_are_strings_equal(_rol, 'docent')]]">
+          <span>Overizcht</span>
+      </a>
+
         <a name="logout" href$="[[_c_baseURL]]logout"  verborgen$="[[_are_strings_equal(_rol, 'undefined')]]">
           <span>Uitloggen</span>
         </a>
@@ -196,50 +149,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
         <!-- element$="none" of weglaten van element$ geeft beide aan dat er geen polymerElement gebruikt zal gaan worden -->
         <section page-name="home" title="HOME" element$="none">
-          <paper-material elevation="1" style="max-width: 280px;" verborgen$="[[!_are_strings_equal(_rol, 'undefined')]]">
+          <div class="login">
+          <paper-material elevation="1" verborgen$="[[!_are_strings_equal(_rol, 'undefined')]]">
               <my-login username="{{_username}}" rol="{{_rol}}"></my-login>
             </paper-material>
+          </div>
             <!-- Student rooster -->
             
-            <scheduler-component 
-            default-view="agendaWeek"
-            max-time="18:00:00" min-time="07:00:00"
-            events='[
-              {"title" : "event1","start" : "2018-04-04"},
-              {"title" : "event2","start" : "2018-04-06T12:30:00","end" : "2018-04-05"},
-              {"title" : "event3","start" : "2018-04-15T12:30:00"}]'
-              header='{"center":"title","left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
-              verborgen$="[[!_are_strings_equal(_rol, 'student')]]">
-              </scheduler-component>
+  
               <!-- Docent rooster -->
-              <paper-dialog with-backdrop id="dialog">
-                <div class="dialog-header">
-                  <div class="icon">
-                      <iron-icon icon="icons:query-builder"></iron-icon>
-                  </div>
-                  <div class="content">
-                  <h1>OO Design & Construction_Werkcollege</h1>
-                  <h3>Werkcollege</h3>
-                </div>
-                </div>
-                <div class="date-header">
-                  <h2>Dinsdag 20 Februari 2018</h2>
-                </div>
-              
-              </paper-dialog>
-              <scheduler-component
-              on-event-click="toggleDialog"
-              verborgen$="[[!_are_strings_equal(_rol, 'docent')]]" 
-              default-view="agendaWeek"
-              header='{"center":"title","left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
-              height=100%
-              min-time="07:00:00" max-time="20:00:00" 
-              events='[
-                {"title" : "event1", "start" : "2018-04-06T10:00:00", "end" : "2018-04-06T12:30:00"},
-                {"title" : "event2", "start" : "2018-04-04T12:30:00", "end" : "2018-04-04T17:30:00"}
-                ]'
-                >
-                </scheduler-component>
+            <my-rooster-docent verborgen$="[[!_are_strings_equal(_rol, 'docent')]]"> </my-rooster-docent>
         </section>
 
         <section page-name="systeem_instellen_systeemdatum"
@@ -260,25 +179,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-material>
           </section>
 
-          <section page-name="login"
-              	   title="LOGIN"
-              	   element$="my-login">
-            <paper-material elevation="1" style="max-width: 380px;">'
-              <my-login username="{{_username}}" rol="{{_rol}}" ></my-login>
-            </paper-material>
-          </section>
-
           <section page-name="logout"
                    title="UITLOGGEN"
                    element="my-logout">
-           
               <my-logout rol="{{_rol}}"></my-logout>
-           
           </section>
 
 <!-- sections voor docent -->
 
  <!-- sections voor student -->
+ <section page-name="student_overzicht"
+ element="my-overzicht">
+
+ <my-overzicht rol="{{_rol}}"></my-overzicht>
+
+</section>
+
           <section  page-name="student_medestudenten"
                     title="OVERZICHT MEDESTUDENTEN"
                     element$="my-medestudenten">
@@ -294,13 +210,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 c_rol="[[_rol]]"
                 c_username="[[_username]]">
               </my-medestudenten>
-            </paper-material>
-          </section>
-
-          <section page-name="student_details" title="STUDENT DETAILS">
-            <paper-material elevation="1">
-              <h2 class="page-title">Student: [[_ar_subsubroute_data.subsubpage]]</h2>
-              <div>This is [[_ar_subsubroute_data.subsubpage]]'s section</div>
             </paper-material>
           </section>
 
@@ -482,10 +391,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	      return lokaledatumstring;
         },
         
-        toggleDialog: function() {
-          console.log("Test")
-            this.$.dialog.toggle();
-        }
        
       });   
       
