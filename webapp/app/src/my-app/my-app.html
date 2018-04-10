@@ -114,6 +114,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .dropdown:hover .dropdown-content {
           display: block;
       }
+
+       #dialogOverzicht{
+        overflow-y: scroll;
+      }
+
+      my-overzicht{
+        margin: 0; 
+        padding: 0;
+      }
     </style>
 
     <app-location route="{{_ar_route}}" use-hash-as-path></app-location>
@@ -163,17 +172,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
 
       <div class="menu_rechts">
-      <a name="overzicht_absentie" href$="[[_c_baseURL]]overzicht_absentie" >
+      <a on-click="toggleOverzicht" name="overzicht_absentie">
         <span>Overzicht absentie</span>
       </a> 
+
+      <paper-dialog id="dialogOverzicht">
+        <my-overzicht></my-overzicht>
+      </paper-dialog>
 
       <div class="dropdown">
           <button class="dropbtn">Yannick Houtzager</button>
           <div class="dropdown-content">
             <a href="[[_c_baseURL]]wijzigen_wachtwoord">Wijzigen wachtwoord</a>
             <a href="[[_c_baseURL]]logout">Uitloggen</a>
-            <a href="[[_c_baseURL]]Wijzigen_wachterwoord">Wijzigen wachtwoord</a>
-            <a href="[[_c_baseURL]]Uitloggen">Uitloggen</a>
           </div>
         </div>
       </div>
@@ -237,13 +248,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- sections voor docent -->
 
  <!-- sections voor student -->
- <section page-name="student_overzicht"
- element="my-overzicht">
-
- <my-overzicht rol="{{_rol}}"></my-overzicht>
-
-</section>
-
           <section  page-name="student_medestudenten"
                     title="OVERZICHT MEDESTUDENTEN"
                     element$="my-medestudenten">
@@ -448,14 +452,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	      }
 	      return lokaledatumstring;
         },
-        
-       
+
+        toggleOverzicht: function () {
+          console.log("Test")
+          this.$.dialogOverzicht.toggle();
+        }
       });   
-      
-
     })();
-
-   
   </script>
 
 </dom-module>

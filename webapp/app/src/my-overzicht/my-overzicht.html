@@ -8,12 +8,49 @@
       :host {
         display: block;
       }
-      .wrapper{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);      
-      }
+
+     .dialog-header{
+       min-width: 800px;
+       position: relative;
+       height: 70px;
+       background-color: #00A1E1;
+       color: #fff;
+       padding: 0px;
+       display: flex;
+       flex-direction: row;
+       margin:0;
+     }
+
+     .dialog-header .icon{
+       background-color: #40B9E9;
+       width: 70px;
+       height: 100%;
+       font-size: 1.5rem;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       --iron-icon-height: 30px;
+      --iron-icon-width: 30px;
+     }
+
+     .title{
+      padding: 0 0 0 10px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+     }
+
+     .dialog-header h1{
+       margin: 0 0 10px 0;
+       font-size: 1.6rem;
+     }
+
+     .dialog-header h3{
+       margin: 0;
+       font-size: 1.4rem; 
+       font-weight: 300;
+     }
+
       .toppertje{
         display: flex;
         flex-direction: row;
@@ -61,11 +98,16 @@
       }
     
     </style>
-
-    <div class="wrapper">
-    
+ <div class="dialog-header">
+    <div class="icon">
+      <iron-icon icon="icons:query-builder"></iron-icon>
+    </div>
+    <div class="title">
+      <h1>OO Design & Construction_Werkcollege</h1>
+      <h3>Werkcollege</h3>
+    </div>
+  </div>
     <span id="overzicht">Overzicht</span>
-
       <div class="toppertje">
         <div class="blokje">Lessen ziek<br>4</div>  
         <div class="blokje">Lessen afwezig<br>4</div>  
@@ -119,7 +161,6 @@
               <td>TICT-V1OODC-15_Werkcollege</td>
             </tr>
           </table>
-    </div>
     </div>
   </template>
 
