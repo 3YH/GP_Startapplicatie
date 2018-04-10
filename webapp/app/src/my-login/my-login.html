@@ -7,7 +7,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
-
+<link rel="import" href="../../bower_components/jquery-md5/jquery.md5.js">
 
 <dom-module id="my-login">
   <template>
@@ -151,7 +151,7 @@
             this.$.ajax_login.contentType="application/json";
             this.$.ajax_login.body={
               "username":this.username,
-              "password":this._password
+              "password":md5(this._password)
             };
             this.$.ajax_login.generateRequest();
 
