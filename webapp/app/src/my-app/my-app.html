@@ -231,19 +231,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <section page-name="systeem_instellen_systeemdatum"
                  title="INSTELLEN SYSTEEMDATUM"
               	 element$="my-systeemdatum">
-            <paper-material elevation="1">
-              <!--
-                c_visible="true" als deze section geselecteerd is.
-                LET OP: boolean values moeten als string doorgegeven worden,
-                        vandaar de quotes rondom de function aanroep.
-                        De aanwezige literal waarde wordt met enkele quotes doorgegeven
-              -->
-              <my-systeemdatum
+
+                 <my-systeemdatum
                 systeemdatumlokaal="{{_systeemdatumlokaal}}"
                 systeemdatumstandaard="{{_systeemdatumstandaard}}"
                 c_visible="[[_are_strings_equal(_ar_page, 'systeem_instellen_systeemdatum')]]">
-              </my-systeemdatum>
-            </paper-material>
+              </my-systeemdatum>    
           </section>
 
           <section page-name="logout"
