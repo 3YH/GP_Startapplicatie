@@ -39,6 +39,8 @@ public class RoosterLadenController  implements Handler {
     private void ophalenRooster(Conversation conversation) {
 
 
+        System.out.println("Received data: " + conversation.toString());
+
         JsonObjectBuilder lJsonObjectBuilder = Json.createObjectBuilder();
         //Deze volgorde mag niet worden gewijzigd i.v.m. JS. (Hier mag dus ook geen andere JSON voor komen.)
         //lJsonObjectBuilder.add("eerste_lesdatum", PrIS.calToStandaardDatumString(lEersteLesDatum)).add("laatste_lesdatum", PrIS.calToStandaardDatumString(lLaatsteLesDatum));
