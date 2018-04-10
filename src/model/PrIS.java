@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PrIS {
 	private ArrayList<Docent> deDocenten;
@@ -148,6 +150,36 @@ public class PrIS {
 		return lGevondenStudent;
 	}
 
+	public Map<String, String> loginDetails(String username, String password)
+	{
+		Map<String, String> loginReturn = new HashMap<String, String>();
+
+		for (Docent d : deDocenten) {
+			if (d.getGebruikersnaam().equals(username)) {
+				if (d.komtWachtwoordOvereen(password)) {
+					loginReturn.put("rol","docent");
+					loginReturn.put("voornaam", d.getVoornaam());
+					loginReturn.put("achternaam", d.getVolledigeAchternaam());
+					loginReturn.put("identificatienummer",""+d.getDocentNummer());
+				}
+			}
+		}
+
+		for (Student s : deStudenten) {
+			if (s.getGebruikersnaam().equals(username)) {
+				if (s.komtWachtwoordOvereen(password)) {
+					loginReturn.put("rol","student");
+					loginReturn.put("voornaam", s.getVoornaam());
+					loginReturn.put("achternaam", s.getVolledigeAchternaam());
+					loginReturn.put("identificatienummer",""+s.getStudentNummer());
+					loginReturn.put("group",s.getGroepId());						//WARNING: Student side only
+				}
+			}
+		}
+
+		return loginReturn;
+	}
+
 	public String login(String gebruikersnaam, String wachtwoord) {
 		for (Docent d : deDocenten) {
 			if (d.getGebruikersnaam().equals(gebruikersnaam)) {
@@ -238,7 +270,6 @@ public class PrIS {
 				br = new BufferedReader(new FileReader(csvFile));
 				
 				while ((line = br.readLine()) != null) {
-					//line = line.replace(",,", ", ,");
 				    // use comma as separator
 					String[] element = line.split(cvsSplitBy);
 					String gebruikersnaam = (element[3] + "." + element[2] + element[1] + "@student.hu.nl").toLowerCase();
