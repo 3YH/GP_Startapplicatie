@@ -37,7 +37,7 @@ public class Application {
 		RoosterLadenController roosterLadenController = new RoosterLadenController(infoSysteem);
 
 		server.registerHandler("/systeemdatum/lesinfo", systeemDatumController);
-		server.registerHandler("/rooster/ophalen", systeemDatumController);
+		server.registerHandler("/rooster/ophalen", roosterLadenController);
 
 		server.registerHandler("/login", loginController);
 
