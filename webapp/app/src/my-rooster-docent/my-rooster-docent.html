@@ -144,6 +144,8 @@
         </div>
       </div>
     </paper-dialog>
+
+
     <scheduler-component on-event-click="toggleDialog" default-view="agendaWeek" header='{"left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
       height=100% min-time="07:00:00" max-time="20:00:00" events='[
           {"title" : "event1", "start" : "2018-04-10T10:00:00", "end" : "2018-04-10T12:30:00"},
@@ -182,6 +184,7 @@
           // zal ook de url echt wijzigen
         },
 
+       
         toggleDialog: function () {
           this.$.dialog.toggle();
         }
