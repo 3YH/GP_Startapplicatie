@@ -14,11 +14,12 @@
       }
     </style>
 
-    <paper-button raised on-click="_logout_clicked">Klik hier als je zeker weet dat je echt wilt uitloggen</paper-button>
+    <paper-button raised on-click="_logout_clicked">Klik hier om uit te loggen</paper-button>
 
   </template>
 
   <script>
+    console.log(this.rol);
     (function() {
       'use strict';
       /* _xxxx private              : geen external data binding      - geen notify
@@ -28,7 +29,6 @@
       */
       Polymer({
         is: 'my-logout',
-
         properties: {
           rol: {
             type: String,
@@ -39,16 +39,22 @@
 
         _logout_clicked: function() {
           console.log("_logout_clicked");
+          console.log(this.rol);
           this.rol = "undefined";
+          console.log(this.rol);
           this._go_home();
          },
         
         _go_home: function() {
+          console.log("hier");
+          location.reload();
+          /*
           var lApp = document.querySelector('my-app');  //het polymer element <my-app>
           var lAppRouter = lApp.$.approuter;            // het html-element <app-route> met id=approuter
           lAppRouter.data={page: ""};                   // vul het data attribute met de homepage url
                                                         // door de two way binding in <app-route> en <app-location>
                                                         // zal ook de url echt wijzigen
+         */
          },
       });
     })();

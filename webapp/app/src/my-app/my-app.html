@@ -127,6 +127,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 0;
         padding: 0;
       }
+      my-logout{
+        margin: 0;
+        padding: 0;
+      }
     </style>
 
     <app-location route="{{_ar_route}}" use-hash-as-path></app-location>
@@ -187,14 +191,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="dropdown">
           <button class="dropbtn">Yannick Houtzager</button>
           <div class="dropdown-content">
-            <a on-click="toggleWachtwoord">Wijzigen wachtwoord</a>
-            <a href="[[_c_baseURL]]logout">Uitloggen</a>
+            <a on-click="toggleWachtwoord" name="wijzigen_wachtwoord">Wijzigen wachtwoord</a>
+            <a on-click="toggleLogout" name="logout">Uitloggen</a>
           </div>
-          <paper-dialog with-backdrop id="dialogWachtwoord">
-            <my-wachtwoord></my-wachtwoord>
-          </paper-dialog>
+         
         </div>
       </div>
+      
+      <paper-dialog with-backdrop id="dialogLogout">
+        <my-logout></my-logout>
+      </paper-dialog>
+
+      <paper-dialog with-backdrop id="dialogWachtwoord">
+        <my-wachtwoord></my-wachtwoord>
+      </paper-dialog>
+
+    
+
   </app-toolbar>
 
       <!-- Main Content -->
@@ -241,7 +254,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <section page-name="logout"
                    title="UITLOGGEN"
-                   element="my-logout">
+                   element$="my-logout">
               <my-logout rol="{{_rol}}"></my-logout>
           </section>
 
@@ -265,11 +278,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </my-medestudenten>
             </paper-material>
           </section>
+
           <section  page-name="wijzigen_wachtwoord"
                     title="WIJZIGEN WACHTWOORD"
                     element$="my-wachtwoord">             
               <my-wachtwoord></my-wachtwoord>
           </section>
+
           <section  page-name="overzicht_absentie"
                     title="OVERZICHT ABSENTIE"
                     element$="my-overzicht">
@@ -455,11 +470,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         toggleOverzicht: function () {
           console.log("Test")
+          console.log(this.rol);
           this.$.dialogOverzicht.toggle();
         },
         toggleWachtwoord: function () {
           console.log("Test")
+          console.log(this.rol);
           this.$.dialogWachtwoord.toggle();
+        },
+        toggleLogout: function () {
+          console.log("Test")
+          console.log(this.rol);
+          this.$.dialogLogout.toggle();
         }
       });   
     })();
