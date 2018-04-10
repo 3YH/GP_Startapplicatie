@@ -92,16 +92,6 @@
         <span class="my-value">[[systeemdatumlokaal]] (lokaaldatumformaat)</span>
       </div>
     </div>
-
-    <iron-ajax
-      id="ajax_lesinfo"
-      method="POST"
-      url="/systeemdatum/lesinfo"
-      handle-as="json"
-      on-response="_ophalen_lesinfo_response_handler">
-    </iron-ajax>
-
-
   </template>
 
   <script>
@@ -138,15 +128,15 @@
           },
         },
 
-        _ophalen_lesinfo_request_handler: function() {
-          if (this.c_visible) {    /* zodra zichtbaar geworden haal info op van server */
-            console.log("_ophalen_lesinfo_request_handler");
-            this.$.ajax_lesinfo.contentType="application/json";
-            this.$.ajax_lesinfo.body={
-            };
-            this.$.ajax_lesinfo.generateRequest();
-          }
-        },
+        // _ophalen_lesinfo_request_handler: function() {
+        //   if (this.c_visible) {    /* zodra zichtbaar geworden haal info op van server */
+        //     console.log("_ophalen_lesinfo_request_handler");
+        //     this.$.ajax_lesinfo.contentType="application/json";
+        //     this.$.ajax_lesinfo.body={
+        //     };
+        //     this.$.ajax_lesinfo.generateRequest();
+        //   }
+        // },
 
         _ophalen_lesinfo_response_handler: function(request) {
           console.log("_ophalen_lesinfo_response_handler: "+

@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
@@ -150,13 +151,23 @@
         </div>
       </div>
     </paper-dialog>
+
+    <iron-ajax
+    auto
+    id="ajax_rooster"
+    method="POST"
+    url="/rooster/ophalen"
+    handle-as="json"
+    on-response="_ophalen_rooster_request_handler"
+    debounce-duration="1000"
+    ></iron-ajax>
+
     <scheduler-component on-event-click="toggleDialog" default-view="agendaWeek" header='{"left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
       height=100% min-time="07:00:00" max-time="20:00:00" events='[
           {"title" : "event1", "start" : "2018-04-10T10:00:00", "end" : "2018-04-10T12:30:00"},
           {"title" : "event2", "start" : "2018-04-11T12:30:00", "end" : "2018-04-11T17:30:00"}
           ]'>
     </scheduler-component>
-
   </template>
 
   <script>
@@ -177,8 +188,7 @@
             notify: true,
           },
         },
-
-
+  
         _go_home: function () {
           var lApp = document.querySelector('my-app'); //het polymer element <my-app>
           var lAppRouter = lApp.$.approuter; // het html-element <app-route> met id=approuter
@@ -187,7 +197,19 @@
           }; // vul het data attribute met de homepage url
           // door de two way binding in <app-route> en <app-location>
           // zal ook de url echt wijzigen
+        },   
+        
+        _ophalen_rooster_request_handler: function() {
+          console.log("ophalen rooster request");
+            this.$.ajax_rooster.contentType="application/json";
+            this.$.ajax_rooster.body={
+              "leerlingnummer":this.identificatienummer,
+              "password":$.md5(this._password),
+              "rol":this.rol
+            };
+            this.$.ajax_rooster.generateRequest();
         },
+
 
         toggleDialog: function () {
           this.$.dialog.toggle();
