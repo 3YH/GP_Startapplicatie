@@ -8,6 +8,8 @@ import model.PrIS;
 import server.Conversation;
 import server.Handler;
 
+import java.util.Map;
+
 class LoginController implements Handler {
 	private PrIS informatieSysteem;
 	
@@ -42,11 +44,24 @@ class LoginController implements Handler {
 		String lGebruikersnaam = lJsonObjIn.getString("username");						// Uitlezen van opgestuurde inloggegevens... 
 		String lWachtwoord = lJsonObjIn.getString("password");
 		String lRol = informatieSysteem.login(lGebruikersnaam, lWachtwoord);		// inloggen methode aanroepen op domeinmodel...
-		
-		JsonObjectBuilder lJsonObjectBuilder = Json.createObjectBuilder();
-		lJsonObjectBuilder.add("rol", lRol);																	// en teruggekregen gebruikersrol als JSON-object...
-		String lJsonOut = lJsonObjectBuilder.build().toString();
-		
-		conversation.sendJSONMessage(lJsonOut);															// terugsturen naar de Polymer-GUI!
+		Map<String, String> loginInfo = informatieSysteem.loginDetails(lGebruikersnaam,lWachtwoord);
+
+		if(loginInfo.isEmpty())
+		{
+			//LOGIN FAILED !
+			conversation.sendJSONMessage("{\"rol\":\"undefined\"}");
+		}
+		else
+		{
+			JsonObjectBuilder lJsonObjectBuilder = Json.createObjectBuilder();
+			lJsonObjectBuilder.add("rol", loginInfo.get("rol"));
+			lJsonObjectBuilder.add("voornaam", loginInfo.get("voornaam"));
+			lJsonObjectBuilder.add("achternaam", loginInfo.get("achternaam"));
+			lJsonObjectBuilder.add("identificatienummer", loginInfo.get("identificatienummer"));		// en teruggekregen gebruikersrol als JSON-object...
+			if(loginInfo.containsKey("group")) lJsonObjectBuilder.add("group", loginInfo.get("group"));
+			String lJsonOut = lJsonObjectBuilder.build().toString();
+			conversation.sendJSONMessage(lJsonOut);
+		}
+													// terugsturen naar de Polymer-GUI!
 	}
 }
