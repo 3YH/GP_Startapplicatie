@@ -104,7 +104,7 @@
         properties: {
           _password: {
             type: String,
-            value: "geheim",                           /* om snel te testen zonder steeds input te doen */
+            value: "geheim6",                           /* om snel te testen zonder steeds input te doen */
           },
           rol: {
             type: String,
@@ -134,10 +134,10 @@
         },
 
         _go_home: function() {
-          //Wordt uitgevoerd 2 sec na inloggen:
           // setTimeout(function () { 
           //   console.log("Test calendar")
-          //   this.eventRender()
+          //   this.$._scheduler._refetchEvents()
+          //   this.$._scheduler.fullCalendar('removeEvents');
           //   }, 2000);
           var lApp = document.querySelector('my-app');  //het polymer element <my-app>
           var lAppRouter = lApp.$.approuter;            // het html-element <app-route> met id=approuter

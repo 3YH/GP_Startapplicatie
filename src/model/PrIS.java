@@ -277,11 +277,9 @@ public class PrIS {
 					gebruikersnaam = gebruikersnaam.replace(" ","");
 					String lStudentNrString  = element[0];
 					int lStudentNr = Integer.parseInt(lStudentNrString);
-					lStudent = new Student(element[3], element[2], element[1], "geheim", gebruikersnaam, lStudentNr); //Volgorde 3-2-1 = voornaam, tussenvoegsel en achternaam
+					lStudent = new Student(element[3], element[2], element[1],  element[4], gebruikersnaam, lStudentNr); //Volgorde 3-2-1 = voornaam, tussenvoegsel en achternaam
 					pStudenten.add(lStudent);
 					k.voegStudentToe(lStudent);
-					
-					//System.out.println(gebruikersnaam);
 			
 				}
 
