@@ -1,11 +1,15 @@
 package controller;
 
 import model.PrIS;
+import model.RoosterData;
+import model.persoon.Student;
 import server.Conversation;
 import server.Handler;
 
 import javax.json.Json;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -21,7 +25,9 @@ public class RoosterLadenController  implements Handler {
      *
      * @param infoSys - het toegangspunt tot het domeinmodel
      */
+    private PrIS infoSys;
     public RoosterLadenController(PrIS infoSys) {
+        this.infoSys = infoSys;
     }
 
     public void handle(Conversation conversation) {
@@ -37,8 +43,35 @@ public class RoosterLadenController  implements Handler {
         //Deze volgorde mag niet worden gewijzigd i.v.m. JS. (Hier mag dus ook geen andere JSON voor komen.)
         //lJsonObjectBuilder.add("eerste_lesdatum", PrIS.calToStandaardDatumString(lEersteLesDatum)).add("laatste_lesdatum", PrIS.calToStandaardDatumString(lLaatsteLesDatum));
 
-        String lJsonOut = lJsonObjectBuilder.build().toString();
+        JsonObject lJsonObjIn = (JsonObject) conversation.getRequestBodyAsJSON();
 
+        if(lJsonObjIn.getString("rol").equals("student"))
+        {
+            String lNummer = lJsonObjIn.getString("leerlingnummer");						// Uitlezen van meegestuurde leerlingnummer
+            String lWachtwoord = lJsonObjIn.getString("password");                               //uitlezen van MD5 pass.
+
+            Student s = this.infoSys.getStudent(Integer.parseInt(lNummer));
+            if(s==null)
+            {
+                lJsonObjectBuilder.add("rol", "undefined"); //HA. FAKE LOGIN busted...
+            }
+            else if(s.komtWachtwoordOvereen(lWachtwoord))
+            {
+                //GELDIGE VERIFICATIE :D
+                ArrayList<RoosterData> rooster = this.infoSys.getRoosterData(s.getKlasCode());
+                System.out.println("TODO: Rooster terugsturen in valid json :D (verification succesful!)");
+                lJsonObjectBuilder.add("rol", "student"); //HA. FAKE LOGIN busted...
+            }
+            else
+            {
+                lJsonObjectBuilder.add("rol", "undefined");     //login incorrect
+            }
+        }
+
+
+
+
+        String lJsonOut = lJsonObjectBuilder.build().toString();
         conversation.sendJSONMessage(lJsonOut);										// terugsturen naar de Polymer-GUI!	}
     }
 }

@@ -22,6 +22,7 @@ public class PrIS {
 	private ArrayList<Docent> deDocenten;
 	private ArrayList<Student> deStudenten;
 	private ArrayList<Klas> deKlassen;
+	private Rooster rooster;
 	
 	/**
 	 * De constructor maakt een set met standaard-data aan. Deze data
@@ -51,6 +52,7 @@ public class PrIS {
 		deStudenten = new ArrayList<Student>();
 		deKlassen = new ArrayList<Klas>();
 
+
 		// Inladen klassen
 		vulKlassen(deKlassen);
 
@@ -59,6 +61,8 @@ public class PrIS {
 
 		// Inladen docenten
 		vulDocenten(deDocenten);
+
+		vulRooster();
 	
 	} //Einde Pris constructor
 	
@@ -111,7 +115,12 @@ public class PrIS {
 		
 		return resultaat;
 	}
-	
+
+	public ArrayList<RoosterData> getRoosterData(String klascode)
+	{
+		this.rooster.getRoosterForKlasCode(klascode);
+	}
+
 	public Klas getKlasVanStudent(Student pStudent) {
 	  //used
 		for (Klas lKlas : deKlassen) {
@@ -238,6 +247,42 @@ public class PrIS {
 				}
 			}
 		}
+	}
+
+	private void vulRooster()
+	{
+		Rooster rooster = new Rooster();
+
+		String csvFile = "././CSV/rooster.csv";
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ",";
+		try {
+
+			br = new BufferedReader(new FileReader(csvFile));
+			String rawData = "";
+			while ((line = br.readLine()) != null) {
+				rawData += line+"\n";
+			}
+			rooster.importData(rawData);
+			this.rooster = rooster;
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
 	}
 
 	private void vulKlassen(ArrayList<Klas> pKlassen) {
