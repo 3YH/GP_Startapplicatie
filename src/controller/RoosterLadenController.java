@@ -67,6 +67,10 @@ public class RoosterLadenController  implements Handler {
                 lJsonObjectBuilder.add("rol", "undefined");     //login incorrect
             }
         }
+        else
+        {
+            System.out.println("Je stuurt geen student door.");
+        }
 
 
 
