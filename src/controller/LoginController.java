@@ -43,7 +43,6 @@ class LoginController implements Handler {
 		
 		String lGebruikersnaam = lJsonObjIn.getString("username");						// Uitlezen van opgestuurde inloggegevens... 
 		String lWachtwoord = lJsonObjIn.getString("password");
-		String lRol = informatieSysteem.login(lGebruikersnaam, lWachtwoord);		// inloggen methode aanroepen op domeinmodel...
 		Map<String, String> loginInfo = informatieSysteem.loginDetails(lGebruikersnaam,lWachtwoord);
 
 		if(loginInfo.isEmpty())
@@ -59,6 +58,8 @@ class LoginController implements Handler {
 			lJsonObjectBuilder.add("achternaam", loginInfo.get("achternaam"));
 			lJsonObjectBuilder.add("identificatienummer", loginInfo.get("identificatienummer"));		// en teruggekregen gebruikersrol als JSON-object...
 			if(loginInfo.containsKey("group")) lJsonObjectBuilder.add("group", loginInfo.get("group"));
+			if(loginInfo.containsKey("klasnaam")) lJsonObjectBuilder.add("klasnaam", loginInfo.get("klasnaam"));
+			if(loginInfo.containsKey("klascode")) lJsonObjectBuilder.add("klascode", loginInfo.get("klascode"));
 			String lJsonOut = lJsonObjectBuilder.build().toString();
 			conversation.sendJSONMessage(lJsonOut);
 		}

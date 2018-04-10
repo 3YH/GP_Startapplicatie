@@ -1,16 +1,20 @@
 //checked
 package model.persoon;
 
+import model.klas.Klas;
+
 public class Student extends Persoon {
 
 	private int studentNummer;
 	private String groepId;
+	private Klas klas;
 
 	public Student(String pVoornaam, String pTussenvoegsel, String pAchternaam, String pWachtwoord,
-			String pGebruikersnaam, int sStudentNummer) {
+			String pGebruikersnaam, int sStudentNummer, Klas klas) {
 		super(pVoornaam, pTussenvoegsel, pAchternaam, pWachtwoord, pGebruikersnaam);
 		this.studentNummer = sStudentNummer;
 		this.setGroepId("");
+		this.klas = klas;
 	}
 
 	@Override
@@ -25,6 +29,16 @@ public class Student extends Persoon {
 
 	public String getGroepId() {
 		return this.groepId;
+	}
+
+	public String getKlasnaam()
+	{
+		return this.klas.getNaam();
+	}
+
+	public String getKlasCode()
+	{
+		return this.klas.getKlasCode();
 	}
 
 	public void setGroepId(String pGroepId) {

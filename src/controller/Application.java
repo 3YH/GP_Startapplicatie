@@ -34,8 +34,10 @@ public class Application {
 		SysteemDatumController systeemDatumController = new SysteemDatumController(infoSysteem);
 		LoginController loginController = new LoginController(infoSysteem);
 		MedestudentenController medestudentenController = new MedestudentenController(infoSysteem);
-		
+		RoosterLadenController roosterLadenController = new RoosterLadenController(infoSysteem);
+
 		server.registerHandler("/systeemdatum/lesinfo", systeemDatumController);
+		server.registerHandler("/rooster/ophalen", systeemDatumController);
 
 		server.registerHandler("/login", loginController);
 

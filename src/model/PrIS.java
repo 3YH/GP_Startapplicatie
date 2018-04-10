@@ -172,7 +172,9 @@ public class PrIS {
 					loginReturn.put("voornaam", s.getVoornaam());
 					loginReturn.put("achternaam", s.getVolledigeAchternaam());
 					loginReturn.put("identificatienummer",""+s.getStudentNummer());
-					loginReturn.put("group",s.getGroepId());						//WARNING: Student side only
+                    loginReturn.put("group",s.getGroepId());						//WARNING: Student side only
+                    loginReturn.put("klasnaam",s.getKlasnaam());						//WARNING: Student side only
+                    loginReturn.put("klascode",s.getKlasCode());						//WARNING: Student side only
 				}
 			}
 		}
@@ -277,7 +279,7 @@ public class PrIS {
 					gebruikersnaam = gebruikersnaam.replace(" ","");
 					String lStudentNrString  = element[0];
 					int lStudentNr = Integer.parseInt(lStudentNrString);
-					lStudent = new Student(element[3], element[2], element[1],  element[4], gebruikersnaam, lStudentNr); //Volgorde 3-2-1 = voornaam, tussenvoegsel en achternaam
+					lStudent = new Student(element[3], element[2], element[1],  element[4], gebruikersnaam, lStudentNr, k); //Volgorde 3-2-1 = voornaam, tussenvoegsel en achternaam
 					pStudenten.add(lStudent);
 					k.voegStudentToe(lStudent);
 			
