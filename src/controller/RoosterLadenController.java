@@ -69,7 +69,7 @@ public class RoosterLadenController  implements Handler {
         }
         else
         {
-            System.out.println("Je stuurt geen student door.");
+            System.out.println("Je stuurt geen student door!");
         }
 
 
