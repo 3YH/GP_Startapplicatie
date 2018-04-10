@@ -6,6 +6,7 @@
   <template>
     <style>
       :host {
+        background-color: rgb(247, 247, 247);
         display: block;
       }
 
@@ -52,27 +53,35 @@
      }
 
       .toppertje{
+        background-color: rgb(247, 247, 247);
         display: flex;
         flex-direction: row;
       }
       #overzicht{
+        background-color: rgb(247, 247, 247);
+        color: rgb(104, 104, 104);
         font: bold;
         top: 9%;
-      }
-      .blokje{
-        background-color: white;
-        border: 1px solid black;
-        padding: 25px 70px;
         margin: 15px;
       }
-      .blokje:first-child{
-        margin: 15px 15px 15px 0px;
+      .blokje{
+        line-height: 1.45;
+        background-color: white;
+        padding: 15px 50px;
+        margin: 0px 15px 15px 15px;
+        box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+      }
+      .centerthatnumber{
+        text-align: center;
+        font-size: 2em;
       }
       table {
+        box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+        background-color: rgb(247, 247, 247);
+        margin: 0px 15px 0px 15px;
         min-width: 1000px;
         top: 27%;
-        border-left: 1px solid grey;
-        border-right: 1px solid grey;
+        padding-bottom: 15px;
       }
       table, th, td {
         border-bottom: 1px solid grey;
@@ -94,7 +103,7 @@
         background-color: khaki;
       }
       .afwezig{
-        background-color: lightcoral;
+        background-color: rgb(255, 95, 95);
       }
     
     </style>
@@ -103,16 +112,25 @@
       <iron-icon icon="icons:query-builder"></iron-icon>
     </div>
     <div class="title">
-      <h1>OO Design & Construction_Werkcollege</h1>
-      <h3>Werkcollege</h3>
+      <h1>Overzicht absentie</h1>
+      <h3>Yannick Houtzager</h3>
     </div>
   </div>
     <span id="overzicht">Overzicht</span>
       <div class="toppertje">
-        <div class="blokje">Lessen ziek<br>4</div>  
-        <div class="blokje">Lessen afwezig<br>4</div>  
-        <div class="blokje">totaal aantal lessen gemist<br>8</div>  
-      </div>
+        <div class="blokje">
+          <div>Lessen ziek</div>
+          <div class="centerthatnumber">4</div>
+        </div>  
+        <div class="blokje">
+          <div>Lessen afwezig</div>
+          <div class="centerthatnumber">4</div>
+        </div> 
+        <div class="blokje">
+          <div>Totaal aantal lessen gemist</div>
+          <div class="centerthatnumber">8</div>
+        </div>
+      </div> 
 
         <table class="tabel_absentie">
             <tr class="tabel_header">

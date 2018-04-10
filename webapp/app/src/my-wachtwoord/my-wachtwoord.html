@@ -17,76 +17,116 @@
         --paper-input-container-focus-color: #1a9fd9;
       }
       :host {
+        background-color: rgb(247, 247, 247); 
         display: block;
       }
-      
       span {
         @apply --paper-font-body1;
-      }
-      .toast-button {
-        text-transform: none;
-        color: white;                           /* white tekst */
-        background: #1a9fd9;                    /* kind of blue */
-        --paper-button-ink-color: #00567B;      /* kind of dark blue */
-        margin-left: 0px;
       }
       .usericondiv {
          @apply --layout-horizontal;
          @apply --layout-center-justified;
        }
-      .my-icon {
-        border: #D4D4D4 3px solid;
-        border-radius: 150px;
-        padding: 8px;
-        --iron-icon-fill-color: #1a9fd9;
-        height: 60px;
-        width: 60px;
-      }
       .my-input {
-        padding-left: 8px;
-        padding-right: 1px;
+        padding-left: 30px;
+        padding-bottom: 10px;
+        width: 80%;
       }
       .my-button {
-        width: 100%;
+        width: 80%;
         color: white;
         background: #1a9fd9;
         --paper-button-ink-color: #00567B;
         margin-top: 5px;
       }
-      
-      .my-button[disabled] {            /* styling als de opslaan button disabled is. */
-        background: lightgray;
-        color: darkgray;
+
+      .dialog-header{
+        width: 350px;
+        position: relative;
+        height: 70px;
+        background-color: #00A1E1;
+        color: #fff;
+        padding: 0px;
+        display: flex;
+        flex-direction: row;
       }
+
+     .dialog-header .icon{
+       background-color: #40B9E9;
+       width: 70px;
+       height: 100%;
+       font-size: 1.5rem;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       --iron-icon-height: 30px;
+      --iron-icon-width: 30px;
+     }
+
+     .title{
+      padding: 0 0 0 10px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+     }
+
+     .dialog-header h1{
+       margin: 0 0 10px 0;
+       font-size: 1.6rem;
+     }
+
+     .dialog-header h3{
+       margin: 0;
+       font-size: 1.4rem; 
+       font-weight: 300;
+     }
+     .wrapper{
+       min-height: 300px;
+       max-width: 400px;
+       display: flex;
+       flex-direction: column;
+       background-color: rgb(247, 247, 247);
+     }
+     .blok{
+       min-height: 210px;
+       margin: 10px 10px 0px 10px;
+       float: center;
+       text-align: center;
+       background-color: white;
+       box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+     }
     </style>
-
-    <paper-toast id="toast_reeds_aangelogd" duration="0" text="U bent al ingelogd!">
-      <paper-button on-click="_toast_clicked" class="toast-button">Sluiten</paper-button>
-    </paper-toast>
-
-    <div class="usericondiv">
-      <iron-icon icon="icons:perm-identity" class="my-icon"></iron-icon>
-    </div>
-    <div class="my-input">
-      <paper-input id="email_element" on-keydown="_checkForEnter" label="gebruikersnaam" value="{{username}}"></paper-input>
-      <paper-input id="wachtwoord_element" on-keydown="_checkForEnter" label="wachtwoord" type="password" value="{{_password}}"></paper-input>
-    </div>
-    <paper-button
-      id="wachtwoord_button_element"
-      class="my-button"
-      on-click="_ophalen_wachtwoord_request_handler"
-      raised>
-        Inloggen
-    </paper-button>
-
-    <iron-ajax
-      id="ajax_wachtwoord"
-      method="POST"
-      url="/wachtwoord"
-      handle-as="json"
-      on-response="_ophalen_wachtwoord_response_handler">
-    </iron-ajax>
-
+     <div class="wrapper">
+          <div class="dialog-header">
+            <div class="icon">
+              <iron-icon icon="icons:query-builder"></iron-icon>
+            </div>
+            <div class="title">
+              <h1>Overzicht absentie</h1>
+              <h3>Yannick Houtzager</h3>
+            </div>
+          </div>
+      <div class="blok">
+        <div class="my-input">
+          <paper-input id="wachtwoord-element" on-keydown="_checkForEnter" label="wachtwoord" value="{{username}}"></paper-input>
+          <paper-input id="wachtwoord_element_nr2" on-keydown="_checkForEnter" label="herhaal_wachtwoord" type="password" value="{{_password}}"></paper-input>
+        </div>
+        <paper-button
+          id="wachtwoord_button_element"
+          class="my-button"
+          on-click="_ophalen_wachtwoord_request_handler"
+          raised dialog-dismiss>
+            Opslaan
+        </paper-button>
+      </div>
+        <iron-ajax
+          id="ajax_wachtwoord"
+          method="POST"
+          url="/wachtwoord"
+          handle-as="json"
+          on-response="_ophalen_wachtwoord_response_handler">
+        </iron-ajax>
+   </div>
   </template>
 
   <script>
@@ -104,7 +144,7 @@
         properties: {
           _password: {
             type: String,
-            value: "geheim",                           /* om snel te testen zonder steeds input te doen */
+            value: "",                           /* om snel te testen zonder steeds input te doen */
           },
           rol: {
             type: String,
@@ -112,7 +152,7 @@
           },
           username: {
             type: String,
-            value: "john.smeets@hu.nl",              /* om snel te testen zonder steeds input te doen */
+            value: "",              /* om snel te testen zonder steeds input te doen */
             notify: true
           },
         },

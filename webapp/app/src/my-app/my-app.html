@@ -81,7 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .dropbtn {
-          background-color: #F5F5F5;
+          background-color: #f1f1f1;
           color: #000;
           border: none;
           padding: 0 20px;  
@@ -121,6 +121,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       my-overzicht{
         margin: 0; 
+        padding: 0;
+      }
+      my-wachtwoord{
+        margin: 0;
         padding: 0;
       }
     </style>
@@ -176,16 +180,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <span>Overzicht absentie</span>
       </a> 
 
-      <paper-dialog id="dialogOverzicht">
+      <paper-dialog with-backdrop id="dialogOverzicht">
         <my-overzicht></my-overzicht>
       </paper-dialog>
 
       <div class="dropdown">
           <button class="dropbtn">Yannick Houtzager</button>
           <div class="dropdown-content">
-            <a href="[[_c_baseURL]]wijzigen_wachtwoord">Wijzigen wachtwoord</a>
+            <a on-click="toggleWachtwoord">Wijzigen wachtwoord</a>
             <a href="[[_c_baseURL]]logout">Uitloggen</a>
           </div>
+          <paper-dialog with-backdrop id="dialogWachtwoord">
+            <my-wachtwoord></my-wachtwoord>
+          </paper-dialog>
         </div>
       </div>
   </app-toolbar>
@@ -456,6 +463,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         toggleOverzicht: function () {
           console.log("Test")
           this.$.dialogOverzicht.toggle();
+        },
+        toggleWachtwoord: function () {
+          console.log("Test")
+          this.$.dialogWachtwoord.toggle();
         }
       });   
     })();
