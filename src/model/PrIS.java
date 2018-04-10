@@ -184,7 +184,8 @@ public class PrIS {
 				String voornaam = element[1];
 				String tussenvoegsel = element[2];
 				String achternaam = element[3];
-				pDocenten.add(new Docent(voornaam, tussenvoegsel, achternaam, "e8636ea013e682faf61f56ce1cb1ab5c", gebruikersnaam, 1));
+				String md5_pass = element[4];
+				pDocenten.add(new Docent(voornaam, tussenvoegsel, achternaam, md5_pass, gebruikersnaam, 1));
 				
 				//System.out.println(gebruikersnaam);
 		
