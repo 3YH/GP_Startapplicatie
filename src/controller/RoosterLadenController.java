@@ -38,16 +38,13 @@ public class RoosterLadenController  implements Handler {
 
     private void ophalenRooster(Conversation conversation) {
 
-
-        System.out.println("Received data: " + conversation.toString());
-
         JsonObjectBuilder lJsonObjectBuilder = Json.createObjectBuilder();
         //Deze volgorde mag niet worden gewijzigd i.v.m. JS. (Hier mag dus ook geen andere JSON voor komen.)
         //lJsonObjectBuilder.add("eerste_lesdatum", PrIS.calToStandaardDatumString(lEersteLesDatum)).add("laatste_lesdatum", PrIS.calToStandaardDatumString(lLaatsteLesDatum));
 
         JsonObject lJsonObjIn = (JsonObject) conversation.getRequestBodyAsJSON();
 
-        if(lJsonObjIn.getString("rol").equals("student"))
+        if(lJsonObjIn != null && lJsonObjIn.containsKey("rol") && lJsonObjIn.getString("rol").equals("student"))
         {
             String lNummer = lJsonObjIn.getString("leerlingnummer");						// Uitlezen van meegestuurde leerlingnummer
             String lWachtwoord = lJsonObjIn.getString("password");                               //uitlezen van MD5 pass.
