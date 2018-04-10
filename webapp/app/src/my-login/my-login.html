@@ -115,6 +115,14 @@
             value: "john.smeets@hu.nl",              /* om snel te testen zonder steeds input te doen */
             notify: true
           },
+          voornaam: {
+            type: String,
+            notify: true
+          },
+          achternaam: {
+            type: String,
+            notify: true
+          }
         },
 
         _checkForEnter: function (e) {
@@ -166,6 +174,10 @@
         _ophalen_login_response_handler: function(request) {
           console.log("_ophalen_login_response_handler username="+this.username);
           this.rol = request.detail.response.rol;
+          this.identificatienummer = request.detail.response.identificatienummer;
+          this.voornaam = request.detail.response.voornaam;
+          this.achternaam = request.detail.response.achternaam;
+          this.klascode = request.detail.response.klascode;
           /* this._password = ""; /* om snel te kunnen testen is dit verwijderd */
           if (this.rol == "undefined") {                    //als aanloggen mislukt
             this.$.email_element.invalid = true;                // markeer email-element
