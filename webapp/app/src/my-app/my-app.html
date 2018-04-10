@@ -40,8 +40,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           background-color: var(--app-lightgray);
          }
        }
-      .toolbar {
-        background: #F5F5F5;
+       .toolbar {
+        background: #f1f1f1;
         height: 56px;                                           /* to have a fixed height */
       }
 
@@ -52,9 +52,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-decoration: none;
         color: #000;
       }
-
       .toolbar a:visited{
         color: #000;
+      }
+      
+      .menu_rechts{
+        right: 0;
+        position: absolute;
+      }
+
+      .top_mid{
+        position: absolute;
+        left: 47%;
       }
 
      .login paper-material{
@@ -69,6 +78,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: calc(98% - 132px);
         margin: 16px auto 16px auto;
         background: var(--app-lightgray);
+      }
+
+      .dropbtn {
+          background-color: #F5F5F5;
+          color: #000;
+          border: none;
+          padding: 0 20px;  
+          color:fff;
+          font-size: 16px;
+          text-decoration: none;
+          color: #000;
+      }
+
+      .dropdown {
+          position: relative;
+          display: inline-block;
+      }
+
+      .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #ffffff;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 15;
+      }
+
+      .dropdown-content a {
+          color: black;
+          font-size: 14px;
+          padding: 12px 16px;
+          display: block;
+      }
+
+      .dropdown:hover .dropdown-content {
+          display: block;
       }
     </style>
 
@@ -106,29 +150,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <!-- Main Toolbar -->
     <app-toolbar class="toolbar" verborgen$="[[_are_strings_equal(_rol, 'undefined')]]">
-        <a name="home" href$="[[_c_baseURL]]">
-            <span>Home</span>
-          </a>
-          
-      <a name="systeem_instellen_systeemdatum" href$="[[_c_baseURL]]systeem_instellen_systeemdatum" >
-        <span>Instellen systeemdatum</span>
+      <a name="home" href$="[[_c_baseURL]]">
+          <span>Rooster</span>
+        </a>
+        
+    <a name="systeem_instellen_systeemdatum" href$="[[_c_baseURL]]systeem_instellen_systeemdatum" >
+      <span>Instellen systeemdatum</span>
+    </a> 
+
+    <div class="top_mid">
+    <span class="systdate">[[_ar_selected_object.title]] [[_systeemdatumlokaal]]</span>
+    </div>
+
+      <div class="menu_rechts">
+      <a name="overzicht_absentie" href$="[[_c_baseURL]]overzicht_absentie" >
+        <span>Overzicht absentie</span>
       </a> 
 
-    <div class="right">
-      <span class="systdate">[[_ar_selected_object.title]] ([[_systeemdatumlokaal]])</span>
-      <a name="student_medestudenten" href$="[[_c_baseURL]]student_medestudenten"  verborgen$="[[!_are_strings_equal(_rol, 'student')]]">
-          <span>Toon medestudenten</span>
-      </a>
-
-      <a name="student_overzicht" href$="[[_c_baseURL]]student_overzicht"  verborgen$="[[!_are_strings_equal(_rol, 'docent')]]">
-          <span>Overizcht</span>
-      </a>
-
-        <a name="logout" href$="[[_c_baseURL]]logout"  verborgen$="[[_are_strings_equal(_rol, 'undefined')]]">
-          <span>Uitloggen</span>
-        </a>
+      <div class="dropdown">
+          <button class="dropbtn">Yannick Houtzager</button>
+          <div class="dropdown-content">
+            <a href="[[_c_baseURL]]wijzigen_wachtwoord">Wijzigen wachtwoord</a>
+            <a href="[[_c_baseURL]]logout">Uitloggen</a>
+          </div>
+        </div>
       </div>
-    </app-toolbar>
+  </app-toolbar>
 
       <!-- Main Content -->
     
@@ -211,6 +258,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 c_username="[[_username]]">
               </my-medestudenten>
             </paper-material>
+          </section>
+
+          <section  page-name="wijzigen_wachtwoord"
+                    title="WIJZIGEN WACHTWOORD"
+                    element$="my-wachtwoord">             
+              <my-wachtwoord></my-wachtwoord>
+          </section>
+
+          <section  page-name="overzicht_absentie"
+                    title="OVERZICHT ABSENTIE"
+                    element$="my-overzicht">
+            <my-overzicht></my-overzicht>
           </section>
 
           <section page-name="view404"

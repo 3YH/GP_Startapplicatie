@@ -8,14 +8,119 @@
       :host {
         display: block;
       }
-
-      span {
-        @apply --paper-font-body1;
+      .wrapper{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);      
       }
+      .toppertje{
+        display: flex;
+        flex-direction: row;
+      }
+      #overzicht{
+        font: bold;
+        top: 9%;
+      }
+      .blokje{
+        background-color: white;
+        border: 1px solid black;
+        padding: 25px 70px;
+        margin: 15px;
+      }
+      .blokje:first-child{
+        margin: 15px 15px 15px 0px;
+      }
+      table {
+        min-width: 1000px;
+        top: 27%;
+        border-left: 1px solid grey;
+        border-right: 1px solid grey;
+      }
+      table, th, td {
+        border-bottom: 1px solid grey;
+        border-top: 1px solid grey;
+        border-collapse: collapse;
+      }
+      th, td {
+          padding: 15px;
+          text-align: left;
+      }
+      table th {
+          background-color: white;
+          color: black;
+      }      
+      .ziek{
+        background-color:lightskyblue;
+      }
+      .gepland_afwezig{
+        background-color: khaki;
+      }
+      .afwezig{
+        background-color: lightcoral;
+      }
+    
     </style>
 
-    <paper-button raised on-click="_overzicht_clicked">nee</paper-button>
+    <div class="wrapper">
+    
+    <span id="overzicht">Overzicht</span>
 
+      <div class="toppertje">
+        <div class="blokje">Lessen ziek<br>4</div>  
+        <div class="blokje">Lessen afwezig<br>4</div>  
+        <div class="blokje">totaal aantal lessen gemist<br>8</div>  
+      </div>
+
+        <table class="tabel_absentie">
+            <tr class="tabel_header">
+              <th>Datum</th>
+              <th>Reden afwezigheid</th> 
+              <th>Gemiste vakken</th>
+            </tr>
+            <tr class="ziek">
+              <td>21-2-2018</td>
+              <td>Ziek</td>
+              <td>TICT-V1OODC-15_Werkcollege</td>
+            </tr>
+            <tr class="gepland_afwezig">
+              <td>20-2-2018</td>
+              <td>Gepland afwezig</td>
+              <td>TICT-V1AUI-15_Werkcollege</td>
+            </tr>
+            <tr class="afwezig">
+              <td>12-2-2018</td>
+              <td>Afwezig</td>
+              <td>TICT-V1OODC-15_Werkcollege</td>
+            </tr>
+            <tr class="ziek">
+              <td>09-1-2018</td>
+              <td>Ziek</td>
+              <td>TICT-V1AUI-15_Werkcollege</td>
+            </tr>
+            <tr class="ziek">
+                <td>09-1-2018</td>
+                <td>Ziek</td>
+                <td>TICT-V1OODC-15_Werkcollege</td>
+              </tr>
+            <tr class="ziek">
+              <td>08-1-2018</td>
+              <td>Ziek</td>
+              <td>TICT-V1AUI-15_Werkcollege</td>
+            </tr>
+            <tr class="afwezig">
+              <td>07-1-2018</td>
+              <td>Afwezig</td>
+              <td>TICT-V1OODC-15_Werkcollege</td>
+            </tr>
+            <tr class="gepland_afwezig">
+              <td>09-1-2018</td>
+              <td>Gepland afwezig</td>
+              <td>TICT-V1OODC-15_Werkcollege</td>
+            </tr>
+          </table>
+    </div>
+    </div>
   </template>
 
   <script>
@@ -32,24 +137,10 @@
         properties: {
           rol: {
             type: String,
-            value: "docent",
+            value: "undefined",
             notify: true,
           },
         },
-
-        _overzicht_clicked: function() {
-          console.log("_overzicht_clicked");
-          this.rol = "undefined";
-          this._go_home();
-         },
-        
-        _go_home: function() {
-          var lApp = document.querySelector('my-app');  //het polymer element <my-app>
-          var lAppRouter = lApp.$.approuter;            // het html-element <app-route> met id=approuter
-          lAppRouter.data={page: ""};                   // vul het data attribute met de homepage url
-                                                        // door de two way binding in <app-route> en <app-location>
-                                                        // zal ook de url echt wijzigen
-         },
       });
     })();
   </script>
