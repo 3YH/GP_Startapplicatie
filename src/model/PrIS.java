@@ -118,7 +118,7 @@ public class PrIS {
 
 	public ArrayList<RoosterData> getRoosterData(String klascode)
 	{
-		this.rooster.getRoosterForKlasCode(klascode);
+		return this.rooster.getRoosterForKlasCode(klascode);
 	}
 
 	public Klas getKlasVanStudent(Student pStudent) {
