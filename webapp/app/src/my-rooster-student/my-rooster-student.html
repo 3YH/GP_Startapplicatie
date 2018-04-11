@@ -100,21 +100,28 @@
      }
 
      .dialog-content .content-card{
+       min-height: 250px;
        border-radius: 3px;
        position: relative;
        background-color: #fff;
        @apply --shadow-elevation-2dp;
      }
 
-     .content-card p{
+     .content-card p, b{
+       padding-left: 15px;
        margin: 2px 0;
      }
 
-     .content-card paper-button{
-       text-transform: uppercase;
+     .my-button{
+       min-width: 145px;
        background-color: #00A1E1;
        color:#fff;
-       margin: 15px;
+       margin: 10px;
+     }
+
+     .paper-toast{
+      --paper-toast-background-color: #00A1E1;
+      --paper-toast-color: white;
      }
     </style>
     <paper-dialog with-backdrop id="dialog">
@@ -140,20 +147,41 @@
             <p>TICT-V1OODC-15_2017</p>
             <b>Lokaalnummer(s)</b>
             <p>DL200-3.83</p>
+            <b>Docent(en)</b>
+            <p>Dietske.Obbink@hu.nl</p>
+            <b>Groep(en)</b>
+            <p>TICT-SIE-V1D</p>
+            <b>Opmerking</b>
+            <p>TICT-V1OODC-15_Werkcollege</p>
           </div>
         </div>
         <div class="content-right">
           <h3>Absentie</h3>
           <div class="content-card">
-            <paper-button raised>Afwezig melden</paper-button>
-            <paper-button raised>Ziek melden</paper-button>
+            <paper-button
+              class="my-button"
+              id="button_afwezig_melden"
+              on-click="_verander_status_aanwezigheid"
+              raised>
+                Afwezig melden
+            </paper-button>
+            <paper-button 
+              class="my-button"
+              id="button_ziek_melden"
+              on-click="_verander_status_gezondheid"
+              raised>
+                Ziek melden
+            </paper-button>
           </div>
+          <paper-toast class="paper-toast" id="ziekmelding" text="Je bent nu ziek gemeld."></paper-toast>
+          <paper-toast class="paper-toast" id="betermelding" text="Je bent nu beter gemeld."></paper-toast>
+          <paper-toast class="paper-toast" id="afwezigmelding" text="Je bent nu afwezig gemeld."></paper-toast>
+          <paper-toast class="paper-toast" id="aanwezigmelding" text="Je bent nu aanwezig gemeld."></paper-toast>
         </div>
       </div>
     </paper-dialog>
 
     <iron-ajax
-    auto
     id="ajax_rooster"
     method="POST"
     url="/rooster/ophalen"
@@ -210,6 +238,29 @@
             this.$.ajax_rooster.generateRequest();
         },
 
+        _verander_status_aanwezigheid: function() {
+          var button = this.$.button_afwezig_melden;
+          if(button.textContent == "Aanwezig melden") {
+            button.textContent = "Afwezig melden";
+            this.$.aanwezigmelding.open();
+          }
+          else  {
+            button.textContent = "Aanwezig melden";
+            this.$.afwezigmelding.open();
+          }
+        },
+
+        _verander_status_gezondheid: function() {
+          var button = this.$.button_ziek_melden;
+          if(button.textContent == "Beter melden") {
+            button.textContent = "Ziek melden";
+            this.$.betermelding.open();
+          }
+          else  {
+            button.textContent = "Beter melden";
+            this.$.ziekmelding.open();
+          }
+        },
 
         toggleDialog: function () {
           this.$.dialog.toggle();
