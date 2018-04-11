@@ -35,9 +35,11 @@ public class Application {
 		LoginController loginController = new LoginController(infoSysteem);
 		MedestudentenController medestudentenController = new MedestudentenController(infoSysteem);
 		RoosterLadenController roosterLadenController = new RoosterLadenController(infoSysteem);
+		DetailsLadenController detailsLadenController = new DetailsLadenController(infoSysteem);
 
 		server.registerHandler("/systeemdatum/lesinfo", systeemDatumController);
 		server.registerHandler("/rooster/ophalen", roosterLadenController);
+		server.registerHandler("/rooster/details", detailsLadenController);
 
 		server.registerHandler("/login", loginController);
 

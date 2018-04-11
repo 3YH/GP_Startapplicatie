@@ -101,6 +101,16 @@
             debounce-duration="1000"
             last-response="{{response}}"></iron-ajax>
 
+
+    <iron-ajax
+            id="ajax_details"
+            method="POST"
+            url="/rooster/details"
+            handle-as="json"
+            on-response="_ophalen_details_response_handler"
+            debounce-duration="1000"
+            last-response="{{response}}"></iron-ajax>
+
     <app-globals id="globalvars"></app-globals>
 
     <scheduler-component on-event-click="toggleDialog" default-view="agendaWeek" header='{"left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
@@ -129,44 +139,37 @@
           },
           cursuscode: {
             type: String,
-            value: 'TICT-V1OODC-15_2017',
-            observer: '_activeChanged',
+            value: '',
             notify: true,
           },
           lokaal: {
             type: String,
-            value: 'DL200-3.83',
-            observer: '_activeChanged',
+            value: '',
             notify: true,
           },
           datum: {
             type: String,
-            value: 'Woensdag 11 April',
-            observer: '_activeChanged',
+            value: '',
             notify: true,
           },
           starttijd: {
             type: String,
-            value: '09:00',
-            observer: '_activeChanged',
+            value: '',
             notify: true,
           },
           eindtijd: {
             type: String,
             value: '',
-            observer: '_activeChanged',
             notify: true,
           },
           docentemail: {
             type: String,
-            value: 'Dietske.Obbink@hu.nl',
-            observer: '_activeChanged',
+            value: '',
             notify: true,
           },
           klas: {
             type: String,
-            value: 'TICT-SIE-V1D',
-            observer: '_activeChanged',
+            value: '',
             notify: true,
           },
           passthrough: {
@@ -250,8 +253,36 @@
               //console.log(request.detail.response.events.replace('\\', ''));
           },
 
-        toggleDialog: function () {
-          this.$.dialog.toggle();
+          _ophalen_details_response_handler: function(request) {
+              console.log("_ophalen_details_response_handler");
+              console.log(request.detail.response);
+              this.datum = request.detail.response.datum;
+              this.docentemail = request.detail.response.docentemail;
+              this.eindtijd = request.detail.response.eindtijd;
+              this.klas = request.detail.response.klas;
+              this.lokaal = request.detail.response.lokaal;
+              this.starttijd = request.detail.response.starttijd;
+              //console.log(request.detail.response.events.replace('\\', ''));
+
+
+              this.$.dialog.toggle();   //display dialog! :D
+          },
+
+        toggleDialog: function (event) {
+            this.rol=this.$.globalvars.data.rol;
+            this._rol = this.$.globalvars.data.rol;
+            this.identificatienummer = this.$.globalvars.data.leerlingnummer;
+            this.cursuscode = event.detail.calEvent.title;
+            this.$.ajax_details.contentType="application/json";
+            this.$.ajax_details.body={
+                "leerlingnummer":this.identificatienummer,
+                "password":this.$.globalvars.data.wachtwoord,
+                "rol":this._rol,
+                "title":event.detail.calEvent.title,
+                "start":event.detail.calEvent.start._i,
+                "end":event.detail.calEvent.end._i
+            };
+            this.$.ajax_details.generateRequest();
         }
       });
     })();

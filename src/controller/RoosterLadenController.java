@@ -79,7 +79,6 @@ public class RoosterLadenController  implements Handler {
 
                 lJsonObjectBuilder.add("rol", "student"); //good login
                 lJsonObjectBuilder.add("events", roosterdata);
-                System.out.println(roosterdata);
             }
             else
             {

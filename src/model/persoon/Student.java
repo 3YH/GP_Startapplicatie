@@ -27,6 +27,11 @@ public class Student extends Persoon {
 		}
 	}
 
+	public Klas getKlas()
+	{
+		return this.klas;
+	}
+
 	public String getGroepId() {
 		return this.groepId;
 	}

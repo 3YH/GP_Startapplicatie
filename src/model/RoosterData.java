@@ -49,6 +49,10 @@ public class RoosterData {
         returndate += dateparts[0];
         return returndate;
     }
+    public String getDateNL()
+    {
+        return this.date;
+    }
 
     public String getStarttime() {
         return starttime;
