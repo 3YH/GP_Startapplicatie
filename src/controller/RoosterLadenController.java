@@ -2,6 +2,7 @@ package controller;
 
 import model.PrIS;
 import model.RoosterData;
+import model.persoon.Docent;
 import model.persoon.Student;
 import server.Conversation;
 import server.Handler;
@@ -85,6 +86,12 @@ public class RoosterLadenController  implements Handler {
                 System.out.println("Password mismatch: " + lWachtwoord + " " + s.getWachtwoord() + " for user: " + lNummer);
                 lJsonObjectBuilder.add("rol", "undefined");     //login incorrect
             }
+        }
+        else if(lJsonObjIn != null && lJsonObjIn.containsKey("rol") && lJsonObjIn.getString("rol").equals("docent"))
+        {
+            System.out.println("Je stuurt een docent door!");
+            String username = lJsonObjIn.getString("username");
+            Docent d = this.infoSys.getDocent(username);
         }
         else
         {

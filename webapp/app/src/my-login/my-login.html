@@ -192,7 +192,8 @@
             this.achternaam = request.detail.response.achternaam;
             this.klascode = request.detail.response.klascode;
               this.$.globalvars.data.rol = this.rol;
-              this.$.globalvars.data.leerlingnummer = this.identificatienummer;
+              if(this.rol == "student") this.$.globalvars.data.leerlingnummer = this.identificatienummer;
+              else if(this.rol == "docent") this.$.globalvars.data.leerlingnummer = this.username;
               this.$.globalvars.data.wachtwoord = $.md5(this._password);
                      // verwijder fout markering
 

@@ -236,9 +236,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
         <section page-name="rooster" title="ROOSTER" element$="rooster">
             <!-- Student rooster -->
-          <my-rooster-student verborgen$="[[!_are_strings_equal(_rol, 'student')]]" passthrough$={{_ar_page}}><div id="rol">{{_ar_page}}</div></my-rooster-student>
+          <my-rooster-student verborgen$="[[!_are_strings_equal(_rol, 'student')]]" passthrough$={{_ar_page}}></my-rooster-student>
               <!-- Docent rooster -->
-            <my-rooster-docent verborgen$="[[!_are_strings_equal(_rol, 'docent')]]"> </my-rooster-docent>
+            <my-rooster-docent verborgen$="[[!_are_strings_equal(_rol, 'docent')]]" passthrough$={{_ar_page}}></my-rooster-docent>
         </section>
 
         <section page-name="systeem_instellen_systeemdatum"

@@ -378,15 +378,15 @@
   
           _activeChanged: function (newValue, oldValue) {
             if (newValue) {
-              if (newValue == "rooster") {
+              if (newValue == "rooster" && this.$.globalvars.data.rol == "docent") {
                 this.rol = this.$.globalvars.data.rol;
-                this._rol = this.$.globalvars.data.rol;
+                this._rol = this.$.globalvars.data.rol
                 this.identificatienummer = this.$.globalvars.data.leerlingnummer;
                 console.log(this.$.globalvars.data.rol);
   
                 this.$.ajax_rooster.contentType = "application/json";
                 this.$.ajax_rooster.body = {
-                  "leerlingnummer": this.identificatienummer,
+                  "username": this.identificatienummer,
                   "password": this.$.globalvars.data.wachtwoord,
                   "rol": this._rol
                 };
