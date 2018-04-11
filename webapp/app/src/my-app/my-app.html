@@ -167,7 +167,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <!-- Main Toolbar -->
     <app-toolbar class="toolbar" verborgen$="[[_are_strings_equal(_rol, 'undefined')]]">
-      <a name="rooster" href$="[[_c_baseURL]]">
+      <a name="rooster" href$="[[_c_baseURL]]rooster">
           <span>Rooster</span>
         </a>
         
@@ -234,7 +234,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </section>
         
-        <section page-name="rooster" title="ROOSTER" element$="none">
+        <section page-name="rooster" title="ROOSTER" element$="rooster">
             <!-- Student rooster -->
             <my-rooster-student verborgen$="[[!_are_strings_equal(_rol, 'student')]]"> </my-rooster-student>
               <!-- Docent rooster -->
