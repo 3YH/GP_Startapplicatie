@@ -1,0 +1,171 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<!-- Dit element wordt door de aanwezigheid van de c_visible parameter steeds opnieuw gerefreshed
+     op het moment dat het element in de iron-pages geselecteerd wordt
+     en ook zodra hij weer gedeselecteerd wordt.
+     Deze techniek is bruikbaar om volatile info steeds opnieuw op te halen en niet enkel eenmalig
+     bij start van de applicatie.
+-->
+
+<dom-module id="my-presentielijst">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      :root {
+        --paper-input-container-focus-color: #1a9fd9; /* kind of blue */
+      }
+      table th {
+        font-weight: 400;
+        background-color: #E1E1E1;
+        color: black;
+      }
+
+      
+      table,
+      th,
+      td {
+        border: 0px;
+        border-spacing: 0px;
+      }
+
+      th,
+      td {
+        width: 250px;
+        padding: 5px;
+        text-align: left;
+      }
+    </style>
+    <table>
+        <tr>
+            <th>Naam</th>
+            <th>Status</th>
+          </tr>
+      <template is="dom-repeat" items="[[_c_studenten]]">
+        <tr>
+            <td>{{voornaam}} {{achternaam}}</td>
+            <td class="aanwezig">
+            <select>
+              <option value="aanwezig">Aanwezig</option>
+              <option value="afwezig">Afwezig</option>
+              <option value="gepland_afwezig">Gepland afwezig</option>
+              <option value="ziek">Ziek</option>
+            </select>
+          </td>
+          </tr>
+      </template>
+    </table>
+    <iron-ajax
+      id="ajax_studenten_ophalen"
+      method="POST"
+      url="/student/studenten/ophalen"
+      handle-as="json"
+      on-response="_studenten_ophalen_response_handler">
+    </iron-ajax>
+ 
+    <iron-ajax
+      id="ajax_studenten_opslaan"
+      method="POST"
+      url="/student/studenten/opslaan"
+      handle-as="json"
+      on-response="_studenten_opslaan_response_handler">
+    </iron-ajax>
+
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+      /* _xxxx private              : geen external data binding      - geen notify
+         _c_xx private constant     : geen external binding, constant - geen notify
+         c_xx  public constant      : one way external databinding [[c_xx]] - geen notify nodig
+         xxxx  public               : two way external databinding {{xxxx}} - notify nodig
+      */
+      Polymer({
+        is: 'my-presentielijst',
+
+        properties: {
+          _c_studenten: {
+            type: Array,           /* array<student-info>: student-info = {id, firstName, lastName, sameGroup} 
+										array is constant groepnr is changable */
+          },
+          //boven is zoals my-medestudent
+          // of apart?
+          voornaam: {
+              type: String,
+              value: 'Yannick',
+              notify: true,
+            },
+            achternaam: {
+              type: String,
+              value: 'Houtzager',
+              notify: true,
+            },
+            status: {
+              type: String,
+              value: 'Aanwezig',
+              notify: true,
+            }
+
+        },
+
+        _go_home: function() {
+          var lApp = document.querySelector('my-app');  //het polymer element <my-app>
+          var lAppRouter = lApp.$.approuter;            // het html-element <app-route> met id=approuter
+          lAppRouter.data={page: ""};                   // vul het data attribute met de homepage url
+                                                        // door de two way binding in <app-route> en <app-location>
+                                                        // zal ook de url echt wijzigen
+        },
+        
+        _initializing : function() {
+          if (this.c_visible) {                                 // zodra zichtbaar geworden moet er wat worden gedaan
+            if (this.c_rol=="docent") {                        // voor studenten
+              this._studenten_ophalen_request_handler();    //    haal info op van server
+            } else {                                            // na handmatige url wijziging zonder login
+              var lToast = this.$.toast_invalid_aanroep;        // meldt ongeldige aanroep
+              lToast.open();                                    /* het sluiten van deze error verwijst  */
+                                                                /* terug naar home page */
+            }
+          }
+        },
+
+        _studenten_ophalen_request_handler: function() {
+          console.log("_studenten_ophalen_request_handler user="+this.c_username);
+          this.$.ajax_studenten_ophalen.contentType="application/json";
+          this.$.ajax_studenten_ophalen.body={
+            "username":this.c_username
+          };
+          this.$.ajax_studenten_ophalen.generateRequest();
+        },
+
+        _studenten_ophalen_response_handler: function(request) {
+          console.log("_mededestudenten_ophalen_response_handler aantal studenten="+request.detail.response.length);
+          this._c_studenten = request.detail.response;
+        },
+
+        _studenten_opslaan_request_handler: function() {
+          console.log("_studenten_opslaan_request_handler user="+this.c_username);
+          this.$.ajax_studenten_opslaan.contentType="application/json";
+          this.$.ajax_studenten_opslaan.body={
+              "username":this.c_username,
+              "groupMembers": this._c_studenten
+          };
+          this.$.ajax_studenten_opslaan.generateRequest();
+        },
+
+        _studenten_opslaan_response_handler: function(request) {
+          console.log("_mededestudenten_opslaan_response_handler errorcode="+request.detail.response.errorcode);
+          this._go_home();		/* verlaat de pagina en ga terug naar home page */
+        },
+
+
+      });
+    })();
+  </script>
+</dom-module>
