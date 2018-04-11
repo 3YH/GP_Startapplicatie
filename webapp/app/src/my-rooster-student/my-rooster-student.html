@@ -41,14 +41,15 @@
           <iron-icon icon="icons:query-builder"></iron-icon>
         </div>
         <div class="title">
-          <h1>OO Design & Construction_Werkcollege</h1>
-          <h3>Werkcollege</h3>
+          <h1>{{cursuscode}}</h1>
+          <h3>{{lokaal}}</h3>
         </div>
         <iron-icon class="close" icon="icons:clear" dialog-dismiss></iron-icon>
       </div>
       <div class="date-header">
-        <h2>Dinsdag 20 Februari 2018
-          <span>09:00 - 13:00</span>
+          <h2>{{datum}}
+              <span>{{starttijd}} - {{eindtijd}}</span>
+            </h2>
         </h2>
       </div>
       <div class="dialog-content">
@@ -56,15 +57,13 @@
           <h3>Lesinformatie</h3>
           <div class="content-card">
             <b>Cursusode</b>
-            <p>TICT-V1OODC-15_2017</p>
+            <p>{{cursuscode}}</p>
             <b>Lokaalnummer(s)</b>
-            <p>DL200-3.83</p>
+            <p>{{lokaal}}</p>
             <b>Docent(en)</b>
-            <p>Dietske.Obbink@hu.nl</p>
+            <p>{{docentemail}}</p>
             <b>Groep(en)</b>
-            <p>TICT-SIE-V1D</p>
-            <b>Opmerking</b>
-            <p>TICT-V1OODC-15_Werkcollege</p>
+            <p>{{klas}}</p>
           </div>
         </div>
         <div class="content-right">
@@ -121,13 +120,53 @@
       */
       Polymer({
         is: 'my-rooster-student',
-
-
         properties: {
           rol: {
             type: String,
               value: 'undefined',
               observer: '_activeChanged',
+            notify: true,
+          },
+          cursuscode: {
+            type: String,
+            value: 'TICT-V1OODC-15_2017',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          lokaal: {
+            type: String,
+            value: 'DL200-3.83',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          datum: {
+            type: String,
+            value: 'Woensdag 11 April',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          starttijd: {
+            type: String,
+            value: '09:00',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          eindtijd: {
+            type: String,
+            value: '',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          docentemail: {
+            type: String,
+            value: 'Dietske.Obbink@hu.nl',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          klas: {
+            type: String,
+            value: 'TICT-SIE-V1D',
+            observer: '_activeChanged',
             notify: true,
           },
           passthrough: {
