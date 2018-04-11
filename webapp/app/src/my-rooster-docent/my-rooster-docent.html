@@ -98,16 +98,17 @@
                       <th>Naam</th>
                       <th>Status</th>
                     </tr>
-                <template is="dom-repeat" items="[[students]]">
+                <template is="dom-repeat" items="{{students}}">
                   <tr>
-                      <td>[[item.naam]]</td>
+                      <td>{{item.naam}}</td>
                       <td class="aanwezig">
-                      <select>
+                          {{item.status}}
+                      <!-- <select>
                         <option value="aanwezig">Aanwezig</option>
                         <option value="afwezig">Afwezig</option>
                         <option value="gepland_afwezig">Gepland afwezig</option>
                         <option value="ziek">Ziek</option>
-                      </select>
+                      </select> -->
                     </td>
                     </tr>
                 </template>
@@ -128,7 +129,6 @@
     debounce-duration="1000" 
     last-response="{{response}}"></iron-ajax>
 
-
     <iron-ajax 
     id="ajax_details" 
     method="POST" 
@@ -146,7 +146,6 @@
   </template>
   <script>
       (function () {
-  
         console.log("!!!");
         'use strict';
         /* _xxxx private              : geen external data binding      - geen notify
@@ -211,7 +210,8 @@
               notify: true,
             },
             students: {
-            type: Array 
+            type: Array,
+            value: '[{"naam":"Test", "status":"aanwezig"}]'
           }
           },
   
@@ -268,7 +268,7 @@
             this.klas = request.detail.response.klas;
             this.lokaal = request.detail.response.lokaal;
             this.starttijd = request.detail.response.starttijd;
-            this.students = request.detail.response;
+            var students = eval(request.detail.response);
             //console.log(request.detail.response.events.replace('\\', ''));
   
   
