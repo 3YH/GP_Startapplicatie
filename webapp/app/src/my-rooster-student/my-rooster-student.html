@@ -92,7 +92,6 @@
             debounce-duration="1000"
             last-response="{{response}}"></iron-ajax>
 
-
     <iron-ajax
             id="ajax_details"
             method="POST"
@@ -101,10 +100,9 @@
             on-response="_ophalen_details_response_handler"
             debounce-duration="1000"
             last-response="{{response}}"></iron-ajax>
-
     <app-globals id="globalvars"></app-globals>
 
-    <scheduler-component id="scheduler" on-event-click="toggleDialog" default-view="agendaWeek" header='{"left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
+    <scheduler-component locale='nl' on-event-click="toggleDialog" event-color="#aad8ed" text-color="#55666d" timeFormat="h:mm" default-view="agendaWeek" header='{"left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
       height=100% min-time="07:00:00" max-time="20:00:00" hidden-days='[0,6]' events$='{{events}}'>
     </scheduler-component>
   </template>
@@ -253,8 +251,6 @@
               this.lokaal = request.detail.response.lokaal;
               this.starttijd = request.detail.response.starttijd;
               //console.log(request.detail.response.events.replace('\\', ''));
-
-
               this.$.dialog.toggle();   //display dialog! :D
           },
 
