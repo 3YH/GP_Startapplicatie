@@ -1,0 +1,117 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<!-- shared styles for all views -->
+<dom-module id="shared-styles">
+  <template>
+    <style>
+    .dialog-header {
+        min-width: 800px;
+        position: relative;
+        height: 70px;
+        background-color: #00A1E1;
+        color: #fff;
+        padding: 0px;
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+      }
+
+      .dialog-header .icon {
+        background-color: #40B9E9;
+        width: 70px;
+        height: 100%;
+        font-size: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        --iron-icon-height: 30px;
+        --iron-icon-width: 30px;
+      }
+
+      .dialog-header iron-icon.close {
+        margin: 5px;
+        right: 0;
+        top: 0;
+        position: absolute;
+      }
+
+      .title {
+        padding: 0 0 0 10px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .dialog-header h1 {
+        margin: 0 0 10px 0;
+        font-size: 1.6rem;
+      }
+
+      .dialog-header h3 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 300;
+      }
+
+      .date-header {
+        background-color: #E1E1E1;
+        margin: 0;
+        padding: 15px 10px;
+      }
+
+      .date-header h2 {
+        color: rgba(0, 0, 0, 0.55);
+        margin: 0;
+        font-weight: 400;
+      }
+
+      .date-header h2 span {
+        float: right;
+        font-size: 1.15rem;
+      }
+
+      .dialog-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: #EEEEEE;
+        margin: 0;
+        padding: 15px 10px;
+      }
+
+      .dialog-content h3 {
+        margin: 0;
+        padding: 0 0 15px 2px;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.55);
+      }
+
+      .dialog-content .content-left {
+        margin-right: 30px;
+        width: 400px;
+      }
+
+      .dialog-content .content-right {
+        width: 350px;
+      }
+
+      .dialog-content .content-card{
+       min-height: 250px;
+       border-radius: 3px;
+       position: relative;
+       background-color: #fff;
+       @apply --shadow-elevation-2dp;
+     }
+    </style>
+  </template>
+</dom-module>

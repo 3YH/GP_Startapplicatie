@@ -1,188 +1,161 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../my-app/shared-styles.html">
 
 <dom-module id="my-overzicht">
   <template>
-    <style>
+    <style include="shared-styles">
       :host {
         background-color: rgb(247, 247, 247);
         display: block;
       }
 
-     .dialog-header{
-       min-width: 800px;
-       position: relative;
-       height: 70px;
-       background-color: #00A1E1;
-       color: #fff;
-       padding: 0px;
-       display: flex;
-       flex-direction: row;
-       margin:0;
-     }
-
-     .dialog-header .icon{
-       background-color: #40B9E9;
-       width: 70px;
-       height: 100%;
-       font-size: 1.5rem;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       --iron-icon-height: 30px;
-      --iron-icon-width: 30px;
-     }
-
-     .title{
-      padding: 0 0 0 10px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-     }
-
-     .dialog-header h1{
-       margin: 0 0 10px 0;
-       font-size: 1.6rem;
-     }
-
-     .dialog-header h3{
-       margin: 0;
-       font-size: 1.4rem; 
-       font-weight: 300;
-     }
-
-      .toppertje{
+      .toppertje {
         background-color: rgb(247, 247, 247);
         display: flex;
         flex-direction: row;
       }
-      #overzicht{
-        background-color: rgb(247, 247, 247);
-        color: rgb(104, 104, 104);
-        font: bold;
-        top: 9%;
-        margin: 15px;
+
+      h3.overzicht{
+        margin: 0 0 0 15px;
+        padding: 10px 0 10px 2px;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.55);
       }
-      .blokje{
+
+      .blokje {
         line-height: 1.45;
         background-color: white;
-        padding: 15px 50px;
+        padding: 15px 40px;
+        text-align: center;
+        border-radius: 4px;
+        min-width: 150px;
         margin: 0px 15px 15px 15px;
-        box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+        @apply --shadow-elevation-2dp;
       }
-      .centerthatnumber{
+
+      .centerthatnumber {
         text-align: center;
         font-size: 2em;
       }
+
       table {
-        box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
         background-color: rgb(247, 247, 247);
         margin: 0px 15px 0px 15px;
         min-width: 1000px;
         top: 27%;
         padding-bottom: 15px;
       }
-      table, th, td {
+
+      table,
+      th,
+      td {
         border-bottom: 1px solid grey;
         border-collapse: collapse;
       }
-      th, td {
-          padding: 10px;
-          text-align: left;
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
       }
+
       table th {
-          background-color: white;
-          color: black;
-      }      
-      .ziek{
-        background-color:lightskyblue;
+        background-color: white;
+        color: black;
       }
-      .gepland_afwezig{
+
+      .ziek {
+        background-color: lightskyblue;
+      }
+
+      .gepland_afwezig {
         background-color: khaki;
       }
-      .afwezig{
+
+      .afwezig {
         background-color: rgb(255, 95, 95);
       }
-    
     </style>
- <div class="dialog-header">
-    <div class="icon">
-      <iron-icon icon="icons:query-builder"></iron-icon>
+    <div class="dialog-header">
+      <div class="icon">
+        <iron-icon icon="icons:query-builder"></iron-icon>
+      </div>
+      <div class="title">
+        <h1>Overzicht absentie</h1>
+        <h3>Yannick Houtzager</h3>
+      </div>
     </div>
-    <div class="title">
-      <h1>Overzicht absentie</h1>
-      <h3>Yannick Houtzager</h3>
+    <h3 class="overzicht">Overzicht</h3>
+    <div class="toppertje">
+      <div class="blokje">
+        <div>Lessen ziek</div>
+        <div class="centerthatnumber">4</div>
+      </div>
+      <div class="blokje">
+        <div>Lessen afwezig</div>
+        <div class="centerthatnumber">4</div>
+      </div>
+      <div class="blokje">
+        <div>Totaal aantal lessen gemist</div>
+        <div class="centerthatnumber">8</div>
+      </div>
     </div>
-  </div>
-    <span id="overzicht">Overzicht</span>
-      <div class="toppertje">
-        <div class="blokje">
-          <div>Lessen ziek</div>
-          <div class="centerthatnumber">4</div>
-        </div>  
-        <div class="blokje">
-          <div>Lessen afwezig</div>
-          <div class="centerthatnumber">4</div>
-        </div> 
-        <div class="blokje">
-          <div>Totaal aantal lessen gemist</div>
-          <div class="centerthatnumber">8</div>
-        </div>
-      </div> 
 
-        <table class="tabel_absentie">
-            <tr class="tabel_header">
-              <th>Datum</th>
-              <th>Reden afwezigheid</th> 
-              <th>Gemiste vakken</th>
-            </tr>
-            <tr class="ziek">
-              <td>21-2-2018</td>
-              <td>Ziek</td>
-              <td>TICT-V1OODC-15_Werkcollege</td>
-            </tr>
-            <tr class="gepland_afwezig">
-              <td>20-2-2018</td>
-              <td>Gepland afwezig</td>
-              <td>TICT-V1AUI-15_Werkcollege</td>
-            </tr>
-            <tr class="afwezig">
-              <td>12-2-2018</td>
-              <td>Afwezig</td>
-              <td>TICT-V1OODC-15_Werkcollege</td>
-            </tr>
-            <tr class="ziek">
-              <td>09-1-2018</td>
-              <td>Ziek</td>
-              <td>TICT-V1AUI-15_Werkcollege</td>
-            </tr>
-            <tr class="ziek">
-                <td>09-1-2018</td>
-                <td>Ziek</td>
-                <td>TICT-V1OODC-15_Werkcollege</td>
-              </tr>
-            <tr class="ziek">
-              <td>08-1-2018</td>
-              <td>Ziek</td>
-              <td>TICT-V1AUI-15_Werkcollege</td>
-            </tr>
-            <tr class="afwezig">
-              <td>07-1-2018</td>
-              <td>Afwezig</td>
-              <td>TICT-V1OODC-15_Werkcollege</td>
-            </tr>
-            <tr class="gepland_afwezig">
-              <td>05-1-2018</td>
-              <td>Gepland afwezig</td>
-              <td>TICT-V1OODC-15_Werkcollege</td>
-            </tr>
-          </table>
+    <table class="tabel_absentie">
+      <tr class="tabel_header">
+        <th>Datum</th>
+        <th>Reden afwezigheid</th>
+        <th>Gemiste vakken</th>
+      </tr>
+      <tr class="ziek">
+        <td>21-2-2018</td>
+        <td>Ziek</td>
+        <td>TICT-V1OODC-15_Werkcollege</td>
+      </tr>
+      <tr class="gepland_afwezig">
+        <td>20-2-2018</td>
+        <td>Gepland afwezig</td>
+        <td>TICT-V1AUI-15_Werkcollege</td>
+      </tr>
+      <tr class="afwezig">
+        <td>12-2-2018</td>
+        <td>Afwezig</td>
+        <td>TICT-V1OODC-15_Werkcollege</td>
+      </tr>
+      <tr class="ziek">
+        <td>09-1-2018</td>
+        <td>Ziek</td>
+        <td>TICT-V1AUI-15_Werkcollege</td>
+      </tr>
+      <tr class="ziek">
+        <td>09-1-2018</td>
+        <td>Ziek</td>
+        <td>TICT-V1OODC-15_Werkcollege</td>
+      </tr>
+      <tr class="ziek">
+        <td>08-1-2018</td>
+        <td>Ziek</td>
+        <td>TICT-V1AUI-15_Werkcollege</td>
+      </tr>
+      <tr class="afwezig">
+        <td>07-1-2018</td>
+        <td>Afwezig</td>
+        <td>TICT-V1OODC-15_Werkcollege</td>
+      </tr>
+      <tr class="gepland_afwezig">
+        <td>05-1-2018</td>
+        <td>Gepland afwezig</td>
+        <td>TICT-V1OODC-15_Werkcollege</td>
+      </tr>
+    </table>
     </div>
   </template>
 
   <script>
-    (function() {
+    (function () {
       'use strict';
       /* _xxxx private              : geen external data binding      - geen notify
          _c_xx private constant     : geen external binding, constant - geen notify

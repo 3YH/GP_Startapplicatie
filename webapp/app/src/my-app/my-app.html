@@ -180,7 +180,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
 
       <div class="menu_rechts">
-      <a on-click="toggleOverzicht" name="overzicht_absentie">
+      <a on-click="toggleOverzicht" name="overzicht_absentie" verborgen$="[[!_are_strings_equal(_rol, 'student')]]">
         <span>Overzicht absentie</span>
       </a> 
 
@@ -189,7 +189,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </paper-dialog>
 
       <div class="dropdown">
-          <button class="dropbtn">Yannick Houtzager</button>
+          <button class="dropbtn">{{_voornaam}} {{_achternaam}}</button>
           <div class="dropdown-content">
             <a on-click="toggleWachtwoord" name="wijzigen_wachtwoord">Wijzigen wachtwoord</a>
             <a on-click="toggleLogout" name="logout">Uitloggen</a>
@@ -229,7 +229,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <section page-name="home" title="HOME" element$="none">
           <div class="login">
           <paper-material elevation="1" verborgen$="[[!_are_strings_equal(_rol, 'undefined')]]">
-              <my-login username="{{_username}}" rol="{{_rol}}"></my-login>
+              <my-login username="{{_username}}" voornaam="{{_voornaam}}" achternaam="{{_achternaam}}" rol="{{_rol}}"></my-login>
             </paper-material>
           </div>
         </section>
