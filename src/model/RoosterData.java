@@ -40,7 +40,14 @@ public class RoosterData {
     }
 
     public String getDate() {
-        return date;
+        String returndate = "";
+        String[] dateparts = this.date.split("-");
+        returndate += dateparts[2];                                             //jaar
+        if(dateparts[1].length() == 1) dateparts[1] = "0" + dateparts[1];       //maand
+        if(dateparts[0].length() == 1) dateparts[0] = "0" + dateparts[0];       //dag
+        returndate += "-" + dateparts[1] + "-";
+        returndate += dateparts[0];
+        return returndate;
     }
 
     public String getStarttime() {

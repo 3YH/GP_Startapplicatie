@@ -207,6 +207,8 @@
           _ophalen_rooster_response_handler: function(request) {
               console.log("_ophalen_rooster_response_handler leerlingnummer="+this.identificatienummer);
               console.log(request.detail.response);
+              this.events = request.detail.response.events;
+              //console.log(request.detail.response.events.replace('\\', ''));
           },
 
         toggleDialog: function () {

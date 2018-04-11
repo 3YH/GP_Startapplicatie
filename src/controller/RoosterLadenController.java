@@ -59,7 +59,27 @@ public class RoosterLadenController  implements Handler {
                 //GELDIGE VERIFICATIE :D
                 ArrayList<RoosterData> rooster = this.infoSys.getRoosterData(s.getKlasCode());
                 System.out.println("TODO: Rooster terugsturen in valid json :D (verification succesful!)");
+
+                //[{"title" : "event1", "start" : "2018-04-10T10:00:00", "end" : "2018-04-10T12:30:00"},{"title" : "event2", "start" : "2018-04-11T12:30:00", "end" : "2018-04-11T17:30:00"}]
+                String roosterdata = "[";
+
+                for(int i=0; i < rooster.size();i++)
+                {
+                    RoosterData d = rooster.get(i);
+                    roosterdata += "{\"title\" : \""+d.getSubject()+"\", \"start\" : \""+d.getDate()+"T"+ d.getStarttime()+ ":00\", \"end\" : \""+d.getDate()+"T"+ d.getEndtime()+":00\"}";
+                    if(rooster.size()-1 != i)
+                    {
+                        roosterdata += ",";
+                    }
+                    else
+                    {
+                        roosterdata += "]";
+                    }
+                }
+
                 lJsonObjectBuilder.add("rol", "student"); //good login
+                lJsonObjectBuilder.add("events", roosterdata);
+                System.out.println(roosterdata);
             }
             else
             {
