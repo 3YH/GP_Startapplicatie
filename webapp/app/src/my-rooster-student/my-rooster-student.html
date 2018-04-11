@@ -105,10 +105,7 @@
     <app-globals id="globalvars"></app-globals>
 
     <scheduler-component on-event-click="toggleDialog" default-view="agendaWeek" header='{"left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
-      height=100% min-time="07:00:00" max-time="20:00:00" events='[
-          {"title" : "event1", "start" : "2018-04-10T10:00:00", "end" : "2018-04-10T12:30:00"},
-          {"title" : "event2", "start" : "2018-04-11T12:30:00", "end" : "2018-04-11T17:30:00"}
-          ]'>
+      height=100% min-time="07:00:00" max-time="20:00:00" events$='{{events}}'>
     </scheduler-component>
   </template>
 
@@ -137,6 +134,11 @@
               type: String,
               value: 'leeeeg',
               observer: '_activeChanged',
+              notify: true,
+          },
+          events: {
+              type: String,
+              value: '[{"title" : "event1", "start" : "2018-04-10T10:00:00", "end" : "2018-04-10T12:30:00"},{"title" : "event2", "start" : "2018-04-11T12:30:00", "end" : "2018-04-11T17:30:00"}]',
               notify: true,
           }
         },
