@@ -167,7 +167,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <!-- Main Toolbar -->
     <app-toolbar class="toolbar" verborgen$="[[_are_strings_equal(_rol, 'undefined')]]">
-      <a name="home" href$="[[_c_baseURL]]">
+      <a name="rooster" href$="[[_c_baseURL]]">
           <span>Rooster</span>
         </a>
         
@@ -209,9 +209,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
 
   </app-toolbar>
-
       <!-- Main Content -->
-    
       <iron-pages
         attr-for-selected="page-name"
         selected="[[_ar_page]]"
@@ -234,18 +232,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <my-login username="{{_username}}" rol="{{_rol}}"></my-login>
             </paper-material>
           </div>
+        </section>
+        
+        <section page-name="rooster" title="ROOSTER" element$="none">
             <!-- Student rooster -->
             <my-rooster-student verborgen$="[[!_are_strings_equal(_rol, 'student')]]"> </my-rooster-student>
-  
               <!-- Docent rooster -->
-              <my-rooster-docent verborgen$="[[!_are_strings_equal(_rol, 'docent')]]"> </my-rooster-docent>
+            <my-rooster-docent verborgen$="[[!_are_strings_equal(_rol, 'docent')]]"> </my-rooster-docent>
         </section>
 
         <section page-name="systeem_instellen_systeemdatum"
                  title="INSTELLEN SYSTEEMDATUM"
               	 element$="my-systeemdatum">
 
-                 <my-systeemdatum
+                <my-systeemdatum
                 systeemdatumlokaal="{{_systeemdatumlokaal}}"
                 systeemdatumstandaard="{{_systeemdatumstandaard}}"
                 c_visible="[[_are_strings_equal(_ar_page, 'systeem_instellen_systeemdatum')]]">

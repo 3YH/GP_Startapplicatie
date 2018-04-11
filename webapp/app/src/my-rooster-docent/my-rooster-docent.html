@@ -139,7 +139,18 @@
         <div class="content-right">
           <h3>Absentie</h3>
           <div class="content-card">
-            <b></b>
+            <table>
+              <tr>
+                <th>Naam</th>
+                <th class="achternaam">Status </th>
+              </tr>
+              <template is="dom-repeat" items="[[_c_studenten]]">
+                <tr>
+                  <td class="voornaam">  <a href$="#/student/details/[[item.firstName]]-[[item.lastName]]">[[item.firstName]]</a></td>
+                  <td class="achternaam"><a href$="#/student/details/[[item.firstName]]-[[item.lastName]]">[[item.lastName]] </a></td>
+                </tr>
+              </template>
+            </table>
           </div>
         </div>
       </div>
@@ -153,6 +164,14 @@
           ]'>
     </scheduler-component>
   </template>
+
+  <iron-ajax
+  id="ajax_medestudenten_ophalen"
+  method="POST"
+  url="/student/medestudenten/ophalen"
+  handle-as="json"
+  on-response="_studenten_ophalen_response_handler">
+</iron-ajax>
 
   <script>
     (function () {
@@ -173,6 +192,14 @@
           },
         },
 
+        _medestudenten_ophalen_request_handler: function() {
+          console.log("_studenten_ophalen_request_handler user="+this.c_username);
+          this.$.ajax_medestudenten_ophalen.contentType="application/json";
+          this.$.ajax_medestudenten_ophalen.body={
+            "username":this.c_username
+          };
+          this.$.ajax_medestudenten_ophalen.generateRequest();
+        },
 
         _go_home: function () {
           var lApp = document.querySelector('my-app'); //het polymer element <my-app>
