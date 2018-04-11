@@ -268,7 +268,8 @@
             this.klas = request.detail.response.klas;
             this.lokaal = request.detail.response.lokaal;
             this.starttijd = request.detail.response.starttijd;
-            var students = eval(request.detail.response);
+            var students = JSON.parse(request.detail.response.studenten);
+            console.log(students);
             //console.log(request.detail.response.events.replace('\\', ''));
   
   
