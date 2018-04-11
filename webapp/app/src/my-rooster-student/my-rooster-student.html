@@ -18,16 +18,11 @@
         @apply --paper-font-body1;
       }
 
-     .content-card p, b{
-       padding-left: 15px;
-       margin: 2px 0;
-     }
-
      .my-button{
        min-width: 145px;
        background-color: #00A1E1;
        color:#fff;
-       margin: 10px;
+       margin: 0 10px 10px 10px;
      }
 
     </style>
@@ -80,10 +75,10 @@
                 Ziek melden
             </paper-button>
           </div>
-          <paper-toast class="paper-toast" id="ziekmelding" text="Je bent nu ziek gemeld."></paper-toast>
-          <paper-toast class="paper-toast" id="betermelding" text="Je bent nu beter gemeld."></paper-toast>
-          <paper-toast class="paper-toast" id="afwezigmelding" text="Je bent nu afwezig gemeld."></paper-toast>
-          <paper-toast class="paper-toast" id="aanwezigmelding" text="Je bent nu aanwezig gemeld."></paper-toast>
+          <paper-toast id="ziekmelding" text="Je bent nu ziek gemeld."></paper-toast>
+          <paper-toast id="betermelding" text="Je bent nu beter gemeld."></paper-toast>
+          <paper-toast id="afwezigmelding" text="Je bent nu afwezig gemeld."></paper-toast>
+          <paper-toast id="aanwezigmelding" text="Je bent nu aanwezig gemeld."></paper-toast>
         </div>
       </div>
     </paper-dialog>
