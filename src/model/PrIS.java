@@ -125,6 +125,21 @@ public class PrIS {
 		return this.rooster.getRoosterForTeacher(docent_mail);
 	}
 
+	public Klas getKlasOmTijdMetVakEnDocent(String docent_mail, String vakcode, String starttijd, String datum)
+	{
+		for (Klas klas : deKlassen) {
+			ArrayList<RoosterData> roosterData = getRoosterData(klas.getKlasCode());
+			for(RoosterData data : roosterData)
+			{
+				if(data.getTeacher_email().equals(docent_mail) && data.getDate().equals(datum) && data.getStarttime().equals(starttijd))
+				{
+					return klas;
+				}
+			}
+		}
+		return null;
+	}
+
 	public Klas getKlasVanStudent(Student pStudent) {
 	  //used
 		for (Klas lKlas : deKlassen) {

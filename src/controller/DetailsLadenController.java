@@ -102,7 +102,20 @@ public class DetailsLadenController implements Handler {
                         lJsonObjectBuilder.add("starttijd", data.getStarttime());
                         lJsonObjectBuilder.add("eindtijd", data.getEndtime());
                         lJsonObjectBuilder.add("docentemail", data.getTeacher_email());
-                        //lJsonObjectBuilder.add("klas", d.getKlasnaam());
+                        Klas klas = this.infoSys.getKlasOmTijdMetVakEnDocent(data.getTeacher_email(), data.getGroup_code(), data.getStarttime(), data.getDate());
+                        if(klas==null){ lJsonObjectBuilder.add("studenten", "undefined"); }
+                        else
+                        {
+                            String klasData = "[";
+                            for(int i=0;i<klas.getStudenten().size();i++)
+                            {
+                                Student s = klas.getStudenten().get(i);
+                                klasData += "{\"naam\":\""+s.getVoornaam() + " " + s.getVolledigeAchternaam()+"\", \"status\":\""+s.getStatus()+"\"}";
+                                if(i+1 != klas.getStudenten().size()){ klasData += ","; }
+                            }
+                            klasData += "]";
+                            lJsonObjectBuilder.add("studenten", klasData);
+                        }
                     }
 
                 }

@@ -8,6 +8,7 @@ public class Student extends Persoon {
 	private int studentNummer;
 	private String groepId;
 	private Klas klas;
+	private String status;
 
 	public Student(String pVoornaam, String pTussenvoegsel, String pAchternaam, String pWachtwoord,
 			String pGebruikersnaam, int sStudentNummer, Klas klas) {
@@ -15,6 +16,7 @@ public class Student extends Persoon {
 		this.studentNummer = sStudentNummer;
 		this.setGroepId("");
 		this.klas = klas;
+		this.status = "aanwezig";
 	}
 
 	@Override
@@ -25,6 +27,14 @@ public class Student extends Persoon {
 		} else {
 			return false;
 		}
+	}
+
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Klas getKlas()
