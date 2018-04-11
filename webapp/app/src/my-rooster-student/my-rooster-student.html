@@ -5,7 +5,7 @@
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
 <link rel="import" href="../my-app/shared-styles.html">
-
+<link rel="import" href="../app-globals/app-globals.html">
 <dom-module id="my-rooster-student">
   <template>
     <style include="shared-styles">
@@ -76,7 +76,7 @@
               raised>
                 Afwezig melden
             </paper-button>
-            <paper-button 
+            <paper-button
               class="my-button"
               id="button_ziek_melden"
               on-click="_verander_status_gezondheid"
@@ -92,14 +92,17 @@
       </div>
     </paper-dialog>
 
+
     <iron-ajax
-    id="ajax_rooster"
-    method="POST"
-    url="/rooster/ophalen"
-    handle-as="json"
-    on-response="_ophalen_rooster_request_handler"
-    debounce-duration="1000"
-    ></iron-ajax>
+            id="ajax_rooster"
+            method="POST"
+            url="/rooster/ophalen"
+            handle-as="json"
+            on-response="_ophalen_rooster_response_handler"
+            debounce-duration="1000"
+            last-response="{{response}}"></iron-ajax>
+
+    <app-globals id="globalvars"></app-globals>
 
     <scheduler-component on-event-click="toggleDialog" default-view="agendaWeek" header='{"left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
       height=100% min-time="07:00:00" max-time="20:00:00" events='[
@@ -111,6 +114,8 @@
 
   <script>
     (function () {
+
+        console.log("!!!");
       'use strict';
       /* _xxxx private              : geen external data binding      - geen notify
          _c_xx private constant     : geen external binding, constant - geen notify
@@ -120,14 +125,50 @@
       Polymer({
         is: 'my-rooster-student',
 
+
         properties: {
           rol: {
             type: String,
-            value: "undefined",
+              value: 'undefined',
+              observer: '_activeChanged',
             notify: true,
           },
+          passthrough: {
+              type: String,
+              value: 'leeeeg',
+              observer: '_activeChanged',
+              notify: true,
+          }
         },
-  
+
+          attached: function() {
+              this.rol = this.$.globalvars.data.rol;
+              console.log(this.rol + " - " + this._rol);
+              console.log('setting URL');
+              // Here you would set your URL
+          },
+
+          _activeChanged: function(newValue, oldValue) {
+              if(newValue) {
+                  if(newValue == "rooster")
+                  {
+                      this.rol=this.$.globalvars.data.rol;
+                      this._rol = this.$.globalvars.data.rol;
+                      this.identificatienummer = this.$.globalvars.data.leerlingnummer;
+                      console.log(this.$.globalvars.data.rol);
+
+                      this.$.ajax_rooster.contentType="application/json";
+                      this.$.ajax_rooster.body={
+                          "leerlingnummer":this.identificatienummer,
+                          "password":this.$.globalvars.data.wachtwoord,
+                          "rol":this._rol
+                      };
+                      this.$.ajax_rooster.generateRequest();
+                  }
+                  //this.$.getDevices.generateRequest();
+              }
+          },
+
         _go_home: function () {
           var lApp = document.querySelector('my-app'); //het polymer element <my-app>
           var lAppRouter = lApp.$.approuter; // het html-element <app-route> met id=approuter
@@ -136,17 +177,6 @@
           }; // vul het data attribute met de homepage url
           // door de two way binding in <app-route> en <app-location>
           // zal ook de url echt wijzigen
-        },   
-        
-        _ophalen_rooster_request_handler: function() {
-          console.log("ophalen rooster request");
-            this.$.ajax_rooster.contentType="application/json";
-            this.$.ajax_rooster.body={
-              "leerlingnummer":this.identificatienummer,
-              "password":$.md5(this._password),
-              "rol":this.rol
-            };
-            this.$.ajax_rooster.generateRequest();
         },
 
         _verander_status_aanwezigheid: function() {
@@ -172,6 +202,10 @@
             this.$.ziekmelding.open();
           }
         },
+          _ophalen_rooster_response_handler: function(request) {
+              console.log("_ophalen_rooster_response_handler leerlingnummer="+this.identificatienummer);
+              console.log(request.detail.response);
+          },
 
         toggleDialog: function () {
           this.$.dialog.toggle();

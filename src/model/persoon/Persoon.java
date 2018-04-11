@@ -34,7 +34,7 @@ public abstract class Persoon {
 		return this.achternaam;
 	}
 
-	protected String getWachtwoord() {
+	public String getWachtwoord() {
 		return this.wachtwoord;
 	}
 

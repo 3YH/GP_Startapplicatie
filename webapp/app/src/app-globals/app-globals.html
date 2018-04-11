@@ -1,0 +1,24 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<dom-module id="app-globals">
+<polymer-element name="app-globals">
+    <script>
+        (function() {
+            var data = {
+                rol: 'studentz',
+                leerlingnummer: '',
+                wachtwoord: ''
+            }
+
+            Polymer({
+                is: 'app-globals',
+                ready: function() {
+                    this.data = data;
+                }
+            });
+        })();
+
+    </script>
+</polymer-element>
+</dom-module>

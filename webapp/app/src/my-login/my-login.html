@@ -9,6 +9,7 @@
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../../bower_components/scheduler-component/scheduler-component.html">
 <script src="../../bower_components/jquery-md5/jquery.md5.js"></script>
+<link rel="import" href="../app-globals/app-globals.html">
 
 <dom-module id="my-login">
   <template>
@@ -87,6 +88,8 @@
       on-response="_ophalen_login_response_handler">
     </iron-ajax>
 
+    <app-globals id="globalvars"></app-globals>
+
   </template>
 
   <script>
@@ -104,7 +107,7 @@
         properties: {
           _password: {
             type: String,
-            value: "geheim6",                           /* om snel te testen zonder steeds input te doen */
+            value: "geheim",                           /* om snel te testen zonder steeds input te doen */
           },
           rol: {
             type: String,
@@ -112,7 +115,7 @@
           },
           username: {
             type: String,
-            value: "john.smeets@hu.nl",              /* om snel te testen zonder steeds input te doen */
+            value: "tristan.terhaar@student.hu.nl",              /* om snel te testen zonder steeds input te doen */
             notify: true
           },
           voornaam: {
@@ -142,7 +145,7 @@
         },
 
         _go_home: function() {
-          // setTimeout(function () { 
+            // setTimeout(function () {
           //   console.log("Test calendar")
           //   this.$._scheduler._refetchEvents()
           //   this.$._scheduler.fullCalendar('removeEvents');
@@ -172,20 +175,25 @@
         },
 
         _ophalen_login_response_handler: function(request) {
-          console.log("_ophalen_login_response_handler username="+this.username);
-          this.rol = request.detail.response.rol;
-          this.identificatienummer = request.detail.response.identificatienummer;
-          this.voornaam = request.detail.response.voornaam;
-          this.achternaam = request.detail.response.achternaam;
-          this.klascode = request.detail.response.klascode;
+            console.log("_ophalen_login_response_handler username="+this.username);
           /* this._password = ""; /* om snel te kunnen testen is dit verwijderd */
-          if (this.rol == "undefined") {                    //als aanloggen mislukt
+          if (request.detail.response.rol == "undefined") {                    //als aanloggen mislukt
             this.$.email_element.invalid = true;                // markeer email-element
             this.$.wachtwoord_element.invalid = true;           // markeer wachtwoord-element
 
           } else {                                            // als aanloggen ok
             this.$.email_element.invalid = false;               // verwijder fout markering
-            this.$.wachtwoord_element.invalid = false; 
+            this.$.wachtwoord_element.invalid = false;
+
+            this._rol = request.detail.response.rol;
+            this.rol = request.detail.response.rol;
+            this.identificatienummer = request.detail.response.identificatienummer;
+            this.voornaam = request.detail.response.voornaam;
+            this.achternaam = request.detail.response.achternaam;
+            this.klascode = request.detail.response.klascode;
+              this.$.globalvars.data.rol = this.rol;
+              this.$.globalvars.data.leerlingnummer = this.identificatienummer;
+              this.$.globalvars.data.wachtwoord = $.md5(this._password);
                      // verwijder fout markering
 
             this._go_home();                                    // ga naar de home page.

@@ -59,10 +59,11 @@ public class RoosterLadenController  implements Handler {
                 //GELDIGE VERIFICATIE :D
                 ArrayList<RoosterData> rooster = this.infoSys.getRoosterData(s.getKlasCode());
                 System.out.println("TODO: Rooster terugsturen in valid json :D (verification succesful!)");
-                lJsonObjectBuilder.add("rol", "student"); //HA. FAKE LOGIN busted...
+                lJsonObjectBuilder.add("rol", "student"); //good login
             }
             else
             {
+                System.out.println("Password mismatch: " + lWachtwoord + " " + s.getWachtwoord() + " for user: " + lNummer);
                 lJsonObjectBuilder.add("rol", "undefined");     //login incorrect
             }
         }
