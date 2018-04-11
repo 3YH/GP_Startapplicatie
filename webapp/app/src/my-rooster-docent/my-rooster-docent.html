@@ -14,104 +14,137 @@
         @apply --paper-font-body1;
       }
 
-        
-     .dialog-header{
-       min-width: 800px;
-       position: relative;
-       height: 70px;
-       background-color: #00A1E1;
-       color: #fff;
-       padding: 0px;
-       display: flex;
-       flex-direction: row;
-       margin:0;
-     }
 
-     .dialog-header .icon{
-       background-color: #40B9E9;
-       width: 70px;
-       height: 100%;
-       font-size: 1.5rem;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       --iron-icon-height: 30px;
-      --iron-icon-width: 30px;
-     }
+      .dialog-header {
+        min-width: 800px;
+        position: relative;
+        height: 70px;
+        background-color: #00A1E1;
+        color: #fff;
+        padding: 0px;
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+      }
 
-     .dialog-header iron-icon.close {
-       margin: 5px;
-       right:0; 
-       top:0;
-       position: absolute;
-     }
+      .dialog-header .icon {
+        background-color: #40B9E9;
+        width: 70px;
+        height: 100%;
+        font-size: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        --iron-icon-height: 30px;
+        --iron-icon-width: 30px;
+      }
 
-     .title{
-      padding: 0 0 0 10px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-     }
+      .dialog-header iron-icon.close {
+        margin: 5px;
+        right: 0;
+        top: 0;
+        position: absolute;
+      }
 
-     .dialog-header h1{
-       margin: 0 0 10px 0;
-       font-size: 1.6rem;
-     }
+      .title {
+        padding: 0 0 0 10px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+      }
 
-     .dialog-header h3{
-       margin: 0;
-       font-size: 1.4rem; 
-       font-weight: 300;
-     }
+      .dialog-header h1 {
+        margin: 0 0 10px 0;
+        font-size: 1.6rem;
+      }
 
-     .date-header{
-       background-color: #E1E1E1;
-       margin:0;
-       padding: 15px 10px;
-     }
+      .dialog-header h3 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 300;
+      }
 
-     .date-header h2{
-      color:rgba(0, 0, 0, 0.55);
-      margin:0;
-      font-weight:400;
-     }
+      .date-header {
+        background-color: #E1E1E1;
+        margin: 0;
+        padding: 15px 10px;
+      }
 
-     .date-header h2 span{
-       float: right;
-       font-size:1.15rem;
-     }
+      .date-header h2 {
+        color: rgba(0, 0, 0, 0.55);
+        margin: 0;
+        font-weight: 400;
+      }
 
-     .dialog-content{
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      background-color: #EEEEEE;
-      margin:0;
-      padding: 15px 10px;
-     }
+      .date-header h2 span {
+        float: right;
+        font-size: 1.15rem;
+      }
 
-   .dialog-content h3{
-       margin:0;
-       padding: 0 0 15px 2px;
-       text-transform: uppercase;
-       color:rgba(0, 0, 0, 0.55);
-     }
+      .dialog-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: #EEEEEE;
+        margin: 0;
+        padding: 15px 10px;
+      }
 
-     .dialog-content .content-left{
-       margin-right: 30px;
-       width: 400px;
-     }
+      .dialog-content h3 {
+        margin: 0;
+        padding: 0 0 15px 2px;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.55);
+      }
 
-     .dialog-content .content-right{
-       width: 350px;
-     }
+      .dialog-content .content-left {
+        margin-right: 30px;
+        width: 400px;
+      }
 
-     .dialog-content .content-card{
-       border-radius: 3px;
-       position: relative;
-       background-color: #fff;
-       @apply --shadow-elevation-2dp;
-     }
+      .dialog-content .content-right {
+        width: 350px;
+      }
+
+      .dialog-content .content-card {
+        border-radius: 3px;
+        position: relative;
+        background-color: #fff;
+        @apply --shadow-elevation-2dp;
+      }
+
+      table,
+      th,
+      td {
+        width: 100%;
+        border: 0px;
+        border-spacing: 0px;
+      }
+
+      th,
+      td {
+        padding: 5px;
+        text-align: left;
+      }
+
+      table th {
+        font-weight: 400;
+        background-color: #E1E1E1;
+        color: black;
+      }
+
+      .aanwezig{
+        background-color: #93D6AF;
+      }
+      .ziek{
+        background-color:lightskyblue;
+      }
+      .gepland_afwezig{
+        background-color: khaki;
+      }
+      .afwezig{
+        background-color: rgb(255, 95, 95);
+      }
     </style>
     <paper-dialog with-backdrop id="dialog">
       <div class="dialog-header">
@@ -142,14 +175,18 @@
             <table>
               <tr>
                 <th>Naam</th>
-                <th class="achternaam">Status </th>
+                <th>Status</th>
               </tr>
-              <template is="dom-repeat" items="[[_c_studenten]]">
-                <tr>
-                  <td class="voornaam">  <a href$="#/student/details/[[item.firstName]]-[[item.lastName]]">[[item.firstName]]</a></td>
-                  <td class="achternaam"><a href$="#/student/details/[[item.firstName]]-[[item.lastName]]">[[item.lastName]] </a></td>
-                </tr>
-              </template>
+              <!-- <template is="dom-repeat" items="[[_c_studenten]]"> -->
+              <tr>
+                <td>Yannick Houtzager</td>
+                <td class="aanwezig">Aanwezig</td>
+              </tr>
+              <tr>
+                  <td>David Hollander</td>
+                  <td class="afwezig">Afwezig</td>
+              </tr>
+              <!-- </template> -->
             </table>
           </div>
         </div>
@@ -164,14 +201,6 @@
           ]'>
     </scheduler-component>
   </template>
-
-  <iron-ajax
-  id="ajax_medestudenten_ophalen"
-  method="POST"
-  url="/student/medestudenten/ophalen"
-  handle-as="json"
-  on-response="_studenten_ophalen_response_handler">
-</iron-ajax>
 
   <script>
     (function () {
@@ -192,26 +221,18 @@
           },
         },
 
-        _medestudenten_ophalen_request_handler: function() {
-          console.log("_studenten_ophalen_request_handler user="+this.c_username);
-          this.$.ajax_medestudenten_ophalen.contentType="application/json";
-          this.$.ajax_medestudenten_ophalen.body={
-            "username":this.c_username
-          };
-          this.$.ajax_medestudenten_ophalen.generateRequest();
-        },
 
         _go_home: function () {
           var lApp = document.querySelector('my-app'); //het polymer element <my-app>
           var lAppRouter = lApp.$.approuter; // het html-element <app-route> met id=approuter
           lAppRouter.data = {
-            page: ""
+            page: "rooster"
           }; // vul het data attribute met de homepage url
           // door de two way binding in <app-route> en <app-location>
           // zal ook de url echt wijzigen
         },
 
-       
+
         toggleDialog: function () {
           this.$.dialog.toggle();
         }
