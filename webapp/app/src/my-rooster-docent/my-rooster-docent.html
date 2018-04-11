@@ -16,21 +16,36 @@
         @apply --paper-font-body1;
       }
 
+     .content-card p, b{
+       padding-left: 15px;
+       margin: 2px 0;
+     }
 
       table,
       th,
       td {
-        width: 100%;
         border: 0px;
         border-spacing: 0px;
       }
 
       th,
       td {
+        width: 250px;
         padding: 5px;
         text-align: left;
       }
-
+      .dialog-content .content-left {
+        margin-right: 30px;
+        width: 270px;
+      }
+      .dialog-content .rechts{
+        width: 500px;
+        max-height: 250px;
+        overflow-y: scroll;
+      }
+      .dialog-content .content-right{
+        width: 500px;
+      }
       table th {
         font-weight: 400;
         background-color: #E1E1E1;
@@ -57,25 +72,199 @@
         <div class="content-left">
           <h3>Lesinformatie</h3>
           <div class="content-card">
-            <b>Cursuscode</b>
+            <b>Cursusode</b>
+            <p>{{cursuscode}}</p>
+            <b>Lokaalnummer(s)</b>
+            <p>{{lokaal}}</p>
+            <b>Docent(en)</b>
+            <p>{{docentemail}}</p>
+            <b>Groep(en)</b>
+            <p>{{klas}}</p>
           </div>
         </div>
         <div class="content-right">
           <h3>Absentie</h3>
-          <div class="content-card">
+          <div class="content-card rechts">
             <table>
               <tr>
                 <th>Naam</th>
                 <th>Status</th>
               </tr>
-              <!-- <template is="dom-repeat" items="[[_c_studenten]]"> -->
               <tr>
                 <td>Yannick Houtzager</td>
-                <td class="aanwezig">Aanwezig</td>
+                <td class="aanwezig">
+                <select>
+                  <option value="aanwezig">Aanwezig</option>
+                  <option value="afwezig">Afwezig</option>
+                  <option value="gepland_afwezig">Gepland afwezig</option>
+                  <option value="ziek">Ziek</option>
+                </select>
+              </td>
               </tr>
               <tr>
                   <td>David Hollander</td>
-                  <td class="afwezig">Afwezig</td>
+                  <td class="gepland_afwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                  <td>Sjoerd Rietveld</td>
+                  <td class="aanwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                  <td>Tristan ter Haar</td>
+                  <td class="gepland_afwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                  <td>Eric Meijlink</td>
+                  <td class="aanwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                  <td>Kadeem Vers</td>
+                  <td class="gepland_afwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                  <td>Hamza Kayouhi</td>
+                  <td class="aanwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                  <td>Max Bosch</td>
+                  <td class="gepland_afwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                <td>Yannick Houtzager</td>
+                <td class="aanwezig">
+                    <select>
+                      <option value="aanwezig">Aanwezig</option>
+                      <option value="afwezig">Afwezig</option>
+                      <option value="gepland_afwezig">Gepland afwezig</option>
+                      <option value="ziek">Ziek</option>
+                    </select>
+                  </td>
+              </tr>
+              <tr>
+                  <td>David Hollander</td>
+                  <td class="gepland_afwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                  <td>Sjoerd Rietveld</td>
+                  <td class="aanwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                  <td>Tristan ter Haar</td>
+                  <td class="gepland_afwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                  <td>Eric Meijlink</td>
+                  <td class="aanwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                  <td>Kadeem Vers</td>
+                  <td class="gepland_afwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                  <td>Hamza Kayouhi</td>
+                  <td class="aanwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+              </tr>
+              <tr>
+                  <td>Max Bosch</td>
+                  <td class="gepland_afwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
               </tr>
               <!-- </template> -->
             </table>
@@ -107,9 +296,63 @@
         properties: {
           rol: {
             type: String,
-            value: "undefined",
+              value: 'undefined',
+              observer: '_activeChanged',
             notify: true,
           },
+          cursuscode: {
+            type: String,
+            value: 'TICT-V1OODC-15_2017',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          lokaal: {
+            type: String,
+            value: 'DL200-3.83',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          datum: {
+            type: String,
+            value: 'Woensdag 11 April',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          starttijd: {
+            type: String,
+            value: '09:00',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          eindtijd: {
+            type: String,
+            value: '',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          docentemail: {
+            type: String,
+            value: 'Dietske.Obbink@hu.nl',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          klas: {
+            type: String,
+            value: 'TICT-SIE-V1D',
+            observer: '_activeChanged',
+            notify: true,
+          },
+          passthrough: {
+              type: String,
+              value: 'leeeeg',
+              observer: '_activeChanged',
+              notify: true,
+          },
+          events: {
+              type: String,
+              value: '[{"title" : "event1", "start" : "2018-04-10T10:00:00", "end" : "2018-04-10T12:30:00"},{"title" : "event2", "start" : "2018-04-11T12:30:00", "end" : "2018-04-11T17:30:00"}]',
+              notify: true,
+          }
         },
 
 
