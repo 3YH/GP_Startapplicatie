@@ -1,9 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
 <link rel="import" href="../my-app/shared-styles.html">
+<link rel="import" href="../app-globals/app-globals.html">
 
 <dom-module id="my-rooster-docent">
   <template>
@@ -58,29 +60,29 @@
           <iron-icon icon="icons:query-builder"></iron-icon>
         </div>
         <div class="title">
-          <h1>OO Design & Construction_Werkcollege</h1>
-          <h3>Werkcollege</h3>
+            <h1>{{cursuscode}}</h1>
+            <h3>{{lokaal}}</h3>
         </div>
         <iron-icon class="close" icon="icons:clear" dialog-dismiss></iron-icon>
       </div>
       <div class="date-header">
-        <h2>Dinsdag 20 Februari 2018
-          <span>09:00 - 13:00</span>
+          <h2>{{datum}}
+              <span>{{starttijd}} - {{eindtijd}}</span>
         </h2>
       </div>
       <div class="dialog-content">
         <div class="content-left">
           <h3>Lesinformatie</h3>
           <div class="content-card">
-            <b>Cursusode</b>
-            <p>{{cursuscode}}</p>
-            <b>Lokaalnummer(s)</b>
-            <p>{{lokaal}}</p>
-            <b>Docent(en)</b>
-            <p>{{docentemail}}</p>
-            <b>Groep(en)</b>
-            <p>{{klas}}</p>
-          </div>
+              <b>Cursusode</b>
+              <p>{{cursuscode}}</p>
+              <b>Lokaalnummer(s)</b>
+              <p>{{lokaal}}</p>
+              <b>Docent(en)</b>
+              <p>{{docentemail}}</p>
+              <b>Groep(en)</b>
+              <p>{{klas}}</p>
+            </div>
         </div>
         <div class="content-right">
           <h3>Absentie</h3>
@@ -274,103 +276,175 @@
     </paper-dialog>
 
 
-    <scheduler-component on-event-click="toggleDialog" default-view="agendaWeek" header='{"left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
-      height=100% min-time="07:00:00" max-time="20:00:00" events='[
-          {"title" : "event1", "start" : "2018-04-10T10:00:00", "end" : "2018-04-10T12:30:00"},
-          {"title" : "event2", "start" : "2018-04-11T12:30:00", "end" : "2018-04-11T17:30:00"}
-          ]'>
+    <iron-ajax 
+    id="ajax_rooster" 
+    method="POST" 
+    url="/rooster/ophalen" 
+    handle-as="json" 
+    on-response="_ophalen_rooster_response_handler"
+    debounce-duration="1000" 
+    last-response="{{response}}"></iron-ajax>
+
+
+    <iron-ajax 
+    id="ajax_details" 
+    method="POST" 
+    url="/rooster/details" 
+    handle-as="json" 
+    on-response="_ophalen_details_response_handler"
+    debounce-duration="1000" 
+    last-response="{{response}}"></iron-ajax>
+
+    <app-globals id="globalvars"></app-globals>
+
+    <scheduler-component timeFormat="h:mm" on-event-click="toggleDialog" default-view="agendaWeek" header='{"left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
+      height=100% min-time="07:00:00" max-time="20:00:00" events$='{{events}}'>
     </scheduler-component>
   </template>
-
   <script>
-    (function () {
-      'use strict';
-      /* _xxxx private              : geen external data binding      - geen notify
-         _c_xx private constant     : geen external binding, constant - geen notify
-         c_xx  public constant      : one way external databinding [[c_xx]] - geen notify nodig
-         xxxx  public               : two way external databinding {{xxxx}} - notify nodig
-      */
-      Polymer({
-        is: 'my-rooster-docent',
-
-        properties: {
-          rol: {
-            type: String,
+      (function () {
+  
+        console.log("!!!");
+        'use strict';
+        /* _xxxx private              : geen external data binding      - geen notify
+           _c_xx private constant     : geen external binding, constant - geen notify
+           c_xx  public constant      : one way external databinding [[c_xx]] - geen notify nodig
+           xxxx  public               : two way external databinding {{xxxx}} - notify nodig
+        */
+        Polymer({
+          is: 'my-rooster-docent',
+  
+          properties: {
+            rol: {
+              type: String,
               value: 'undefined',
               observer: '_activeChanged',
-            notify: true,
-          },
-          cursuscode: {
-            type: String,
-            value: 'TICT-V1OODC-15_2017',
-            observer: '_activeChanged',
-            notify: true,
-          },
-          lokaal: {
-            type: String,
-            value: 'DL200-3.83',
-            observer: '_activeChanged',
-            notify: true,
-          },
-          datum: {
-            type: String,
-            value: 'Woensdag 11 April',
-            observer: '_activeChanged',
-            notify: true,
-          },
-          starttijd: {
-            type: String,
-            value: '09:00',
-            observer: '_activeChanged',
-            notify: true,
-          },
-          eindtijd: {
-            type: String,
-            value: '',
-            observer: '_activeChanged',
-            notify: true,
-          },
-          docentemail: {
-            type: String,
-            value: 'Dietske.Obbink@hu.nl',
-            observer: '_activeChanged',
-            notify: true,
-          },
-          klas: {
-            type: String,
-            value: 'TICT-SIE-V1D',
-            observer: '_activeChanged',
-            notify: true,
-          },
-          passthrough: {
+              notify: true,
+            },
+            cursuscode: {
+              type: String,
+              value: '',
+              notify: true,
+            },
+            lokaal: {
+              type: String,
+              value: '',
+              notify: true,
+            },
+            datum: {
+              type: String,
+              value: '',
+              notify: true,
+            },
+            starttijd: {
+              type: String,
+              value: '',
+              notify: true,
+            },
+            eindtijd: {
+              type: String,
+              value: '',
+              notify: true,
+            },
+            docentemail: {
+              type: String,
+              value: '',
+              notify: true,
+            },
+            klas: {
+              type: String,
+              value: '',
+              notify: true,
+            },
+            passthrough: {
               type: String,
               value: 'leeeeg',
               observer: '_activeChanged',
               notify: true,
-          },
-          events: {
+            },
+            events: {
               type: String,
               value: '[{"title" : "event1", "start" : "2018-04-10T10:00:00", "end" : "2018-04-10T12:30:00"},{"title" : "event2", "start" : "2018-04-11T12:30:00", "end" : "2018-04-11T17:30:00"}]',
               notify: true,
-          }
-        },
-
-
-        _go_home: function () {
-          var lApp = document.querySelector('my-app'); //het polymer element <my-app>
-          var lAppRouter = lApp.$.approuter; // het html-element <app-route> met id=approuter
-          lAppRouter.data = {
-            page: "rooster"
-          }; // vul het data attribute met de homepage url
-          // door de two way binding in <app-route> en <app-location>
-          // zal ook de url echt wijzigen
-        },
-
-
-        toggleDialog: function () {
-          this.$.dialog.toggle();
-        }
-      });
-    })();
-  </script>
+            }
+          },
+  
+          attached: function () {
+            this.rol = this.$.globalvars.data.rol;
+            console.log(this.rol + " - " + this._rol);
+            console.log('setting URL');
+            // Here you would set your URL
+          },
+  
+          _activeChanged: function (newValue, oldValue) {
+            if (newValue) {
+              if (newValue == "rooster") {
+                this.rol = this.$.globalvars.data.rol;
+                this._rol = this.$.globalvars.data.rol;
+                this.identificatienummer = this.$.globalvars.data.leerlingnummer;
+                console.log(this.$.globalvars.data.rol);
+  
+                this.$.ajax_rooster.contentType = "application/json";
+                this.$.ajax_rooster.body = {
+                  "leerlingnummer": this.identificatienummer,
+                  "password": this.$.globalvars.data.wachtwoord,
+                  "rol": this._rol
+                };
+                this.$.ajax_rooster.generateRequest();
+              }
+              //this.$.getDevices.generateRequest();
+            }
+          },
+  
+          _go_home: function () {
+            var lApp = document.querySelector('my-app'); //het polymer element <my-app>
+            var lAppRouter = lApp.$.approuter; // het html-element <app-route> met id=approuter
+            lAppRouter.data = {
+              page: ""
+            }; // vul het data attribute met de homepage url
+            // door de two way binding in <app-route> en <app-location>
+            // zal ook de url echt wijzigen
+          },
+  
+          _ophalen_rooster_response_handler: function (request) {
+            console.log("_ophalen_rooster_response_handler leerlingnummer=" + this.identificatienummer);
+            console.log(request.detail.response);
+            this.events = request.detail.response.events;
+            //console.log(request.detail.response.events.replace('\\', ''));
+          },
+  
+          _ophalen_details_response_handler: function (request) {
+            console.log("_ophalen_details_response_handler");
+            console.log(request.detail.response);
+            this.datum = request.detail.response.datum;
+            this.docentemail = request.detail.response.docentemail;
+            this.eindtijd = request.detail.response.eindtijd;
+            this.klas = request.detail.response.klas;
+            this.lokaal = request.detail.response.lokaal;
+            this.starttijd = request.detail.response.starttijd;
+            //console.log(request.detail.response.events.replace('\\', ''));
+  
+  
+            this.$.dialog.toggle(); //display dialog! :D
+          },
+  
+          toggleDialog: function (event) {
+            this.rol = this.$.globalvars.data.rol;
+            this._rol = this.$.globalvars.data.rol;
+            this.identificatienummer = this.$.globalvars.data.leerlingnummer;
+            this.cursuscode = event.detail.calEvent.title;
+            this.$.ajax_details.contentType = "application/json";
+            this.$.ajax_details.body = {
+              "leerlingnummer": this.identificatienummer,
+              "password": this.$.globalvars.data.wachtwoord,
+              "rol": this._rol,
+              "title": event.detail.calEvent.title,
+              "start": event.detail.calEvent.start._i,
+              "end": event.detail.calEvent.end._i
+            };
+            this.$.ajax_details.generateRequest();
+          },
+        });
+      })();
+    </script>
 </dom-module>
