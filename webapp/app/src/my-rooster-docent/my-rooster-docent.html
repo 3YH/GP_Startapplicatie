@@ -298,7 +298,7 @@
     <app-globals id="globalvars"></app-globals>
 
     <scheduler-component timeFormat="h:mm" on-event-click="toggleDialog" default-view="agendaWeek" header='{"left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
-      height=100% min-time="07:00:00" max-time="20:00:00" events$='{{events}}'>
+      height=100% min-time="07:00:00" max-time="20:00:00" hidden-days='[0,6]'  events$='{{events}}'>
     </scheduler-component>
   </template>
   <script>

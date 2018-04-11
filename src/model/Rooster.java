@@ -35,6 +35,19 @@ public class Rooster
         return data;
     }
 
+    public ArrayList<RoosterData> getRoosterForTeacher(String mail)
+    {
+        ArrayList<RoosterData> data = new ArrayList<>();
+        for(RoosterData d : rooster)
+        {
+            if(d.getTeacher_email().equals(mail))
+            {
+                data.add(d);
+            }
+        }
+        return data;
+    }
+
     public void addItem(String date, String starttime, String endtime, String subject, String teacher_email, String location, String group_code)
     {
         rooster.add(new RoosterData(date, starttime, endtime, subject, teacher_email, location, group_code));

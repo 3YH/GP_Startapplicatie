@@ -120,6 +120,10 @@ public class PrIS {
 	{
 		return this.rooster.getRoosterForKlasCode(klascode);
 	}
+	public ArrayList<RoosterData> getRoosterDataDocent(String docent_mail)
+	{
+		return this.rooster.getRoosterForTeacher(docent_mail);
+	}
 
 	public Klas getKlasVanStudent(Student pStudent) {
 	  //used

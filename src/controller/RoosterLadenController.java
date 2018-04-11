@@ -59,9 +59,6 @@ public class RoosterLadenController  implements Handler {
             {
                 //GELDIGE VERIFICATIE :D
                 ArrayList<RoosterData> rooster = this.infoSys.getRoosterData(s.getKlasCode());
-                System.out.println("TODO: Rooster terugsturen in valid json :D (verification succesful!)");
-
-                //[{"title" : "event1", "start" : "2018-04-10T10:00:00", "end" : "2018-04-10T12:30:00"},{"title" : "event2", "start" : "2018-04-11T12:30:00", "end" : "2018-04-11T17:30:00"}]
                 String roosterdata = "[";
 
                 for(int i=0; i < rooster.size();i++)
@@ -92,10 +89,33 @@ public class RoosterLadenController  implements Handler {
             System.out.println("Je stuurt een docent door!");
             String username = lJsonObjIn.getString("username");
             Docent d = this.infoSys.getDocent(username);
+            if(d != null)
+            {
+
+                String roosterdata = "[";
+                ArrayList<RoosterData> rooster = this.infoSys.getRoosterDataDocent(d.getGebruikersnaam());
+                for(int i=0; i < rooster.size();i++)
+                {
+                    RoosterData roosterData = rooster.get(i);
+                    roosterdata += "{\"title\" : \""+roosterData.getSubject()+"\", \"start\" : \""+roosterData.getDate()+"T"+ roosterData.getStarttime()+ ":00\", \"end\" : \""+roosterData.getDate()+"T"+ roosterData.getEndtime()+":00\"}";
+                    if(rooster.size()-1 != i)
+                    {
+                        roosterdata += ",";
+                    }
+                }
+                roosterdata += "]"; //als docent zijn rooster leeg is (Goed aangeleverde csv bestanden @hu !! #not)
+                lJsonObjectBuilder.add("rol", "docent"); //good login
+                lJsonObjectBuilder.add("events", roosterdata);
+
+            }
+            else
+            {
+                lJsonObjectBuilder.add("rol", "undefined");     //login correct, docent not found.
+            }
         }
         else
         {
-            System.out.println("Je stuurt geen student door!");
+            lJsonObjectBuilder.add("rol", "undefined");     //login incorrect
         }
 
 
