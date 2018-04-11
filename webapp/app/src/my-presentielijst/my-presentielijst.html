@@ -26,8 +26,6 @@
         background-color: #E1E1E1;
         color: black;
       }
-
-      
       table,
       th,
       td {
@@ -47,9 +45,9 @@
             <th>Naam</th>
             <th>Status</th>
           </tr>
-      <template is="dom-repeat" items="[[_c_studenten]]">
+      <template is="dom-repeat" items="[[students]]">
         <tr>
-            <td>{{voornaam}} {{achternaam}}</td>
+            <td>[[item.naam]]</td>
             <td class="aanwezig">
             <select>
               <option value="aanwezig">Aanwezig</option>
@@ -61,21 +59,6 @@
           </tr>
       </template>
     </table>
-    <iron-ajax
-      id="ajax_studenten_ophalen"
-      method="POST"
-      url="/student/studenten/ophalen"
-      handle-as="json"
-      on-response="_studenten_ophalen_response_handler">
-    </iron-ajax>
- 
-    <iron-ajax
-      id="ajax_studenten_opslaan"
-      method="POST"
-      url="/student/studenten/opslaan"
-      handle-as="json"
-      on-response="_studenten_opslaan_response_handler">
-    </iron-ajax>
 
   </template>
 
@@ -89,30 +72,10 @@
       */
       Polymer({
         is: 'my-presentielijst',
-
         properties: {
-          _c_studenten: {
-            type: Array,           /* array<student-info>: student-info = {id, firstName, lastName, sameGroup} 
-										array is constant groepnr is changable */
+          students: {
+            type: Array
           },
-          //boven is zoals my-medestudent
-          // of apart?
-          voornaam: {
-              type: String,
-              value: 'Yannick',
-              notify: true,
-            },
-            achternaam: {
-              type: String,
-              value: 'Houtzager',
-              notify: true,
-            },
-            status: {
-              type: String,
-              value: 'Aanwezig',
-              notify: true,
-            }
-
         },
 
         _go_home: function() {
@@ -122,49 +85,21 @@
                                                         // door de two way binding in <app-route> en <app-location>
                                                         // zal ook de url echt wijzigen
         },
-        
-        _initializing : function() {
-          if (this.c_visible) {                                 // zodra zichtbaar geworden moet er wat worden gedaan
-            if (this.c_rol=="docent") {                        // voor studenten
-              this._studenten_ophalen_request_handler();    //    haal info op van server
-            } else {                                            // na handmatige url wijziging zonder login
-              var lToast = this.$.toast_invalid_aanroep;        // meldt ongeldige aanroep
-              lToast.open();                                    /* het sluiten van deze error verwijst  */
-                                                                /* terug naar home page */
-            }
+
+          _ophalen_details_response_handler: function (request) {
+            console.log("_ophalen_details_response_handler");
+            console.log(request.detail.response);
+            this.datum = request.detail.response.datum;
+            this.docentemail = request.detail.response.docentemail;
+            this.eindtijd = request.detail.response.eindtijd;
+            this.klas = request.detail.response.klas;
+            this.lokaal = request.detail.response.lokaal;
+            this.starttijd = request.detail.response.starttijd;
+            this.students = request.detail.response;
+            //console.log(request.detail.response.events.replace('\\', ''));
+  
+            this.$.dialog.toggle(); //display dialog! :D
           }
-        },
-
-        _studenten_ophalen_request_handler: function() {
-          console.log("_studenten_ophalen_request_handler user="+this.c_username);
-          this.$.ajax_studenten_ophalen.contentType="application/json";
-          this.$.ajax_studenten_ophalen.body={
-            "username":this.c_username
-          };
-          this.$.ajax_studenten_ophalen.generateRequest();
-        },
-
-        _studenten_ophalen_response_handler: function(request) {
-          console.log("_mededestudenten_ophalen_response_handler aantal studenten="+request.detail.response.length);
-          this._c_studenten = request.detail.response;
-        },
-
-        _studenten_opslaan_request_handler: function() {
-          console.log("_studenten_opslaan_request_handler user="+this.c_username);
-          this.$.ajax_studenten_opslaan.contentType="application/json";
-          this.$.ajax_studenten_opslaan.body={
-              "username":this.c_username,
-              "groupMembers": this._c_studenten
-          };
-          this.$.ajax_studenten_opslaan.generateRequest();
-        },
-
-        _studenten_opslaan_response_handler: function(request) {
-          console.log("_mededestudenten_opslaan_response_handler errorcode="+request.detail.response.errorcode);
-          this._go_home();		/* verlaat de pagina en ga terug naar home page */
-        },
-
-
       });
     })();
   </script>

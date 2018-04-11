@@ -41,6 +41,24 @@
         width: 500px;
       }
     
+      table th {
+        font-weight: 400;
+        background-color: #E1E1E1;
+        color: black;
+      }
+      table,
+      th,
+      td {
+        border: 0px;
+        border-spacing: 0px;
+      }
+
+      th,
+      td {
+        width: 250px;
+        padding: 5px;
+        text-align: left;
+      }
     </style>
     <paper-dialog with-backdrop id="dialog">
       <div class="dialog-header">
@@ -75,7 +93,25 @@
         <div class="content-right">
           <h3>Absentie</h3>
           <div class="content-card rechts">
-            <my-presentielijst></my-presentielijst>
+              <table>
+                  <tr>
+                      <th>Naam</th>
+                      <th>Status</th>
+                    </tr>
+                <template is="dom-repeat" items="[[students]]">
+                  <tr>
+                      <td>[[item.naam]]</td>
+                      <td class="aanwezig">
+                      <select>
+                        <option value="aanwezig">Aanwezig</option>
+                        <option value="afwezig">Afwezig</option>
+                        <option value="gepland_afwezig">Gepland afwezig</option>
+                        <option value="ziek">Ziek</option>
+                      </select>
+                    </td>
+                    </tr>
+                </template>
+              </table>
             </table> 
           </div>
         </div>
@@ -173,7 +209,10 @@
               type: String,
               value: '[{"title" : "event1", "start" : "2018-04-10T10:00:00", "end" : "2018-04-10T12:30:00"},{"title" : "event2", "start" : "2018-04-11T12:30:00", "end" : "2018-04-11T17:30:00"}]',
               notify: true,
-            }
+            },
+            students: {
+            type: Array 
+          }
           },
   
           attached: function () {
@@ -229,6 +268,7 @@
             this.klas = request.detail.response.klas;
             this.lokaal = request.detail.response.lokaal;
             this.starttijd = request.detail.response.starttijd;
+            this.students = request.detail.response;
             //console.log(request.detail.response.events.replace('\\', ''));
   
   
