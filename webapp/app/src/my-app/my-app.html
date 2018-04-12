@@ -30,8 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 14px;                                        /*toegevoegd tov psk                */
         font-weight: 400;                                       /*toegevoegd tov psk                */
       }
-       [verborgen]{
-          /* als verborgen true is dan ..     */
+       [verborgen]{                 /* als verborgen true is dan ..     */
         display: none;							/* onzichtbaar maken                */
       }
 
@@ -119,16 +118,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         overflow-y: scroll;
       }
 
-      my-overzicht{
+      my-overzicht, my-wachtwoord, my-logout{
         margin: 0; 
-        padding: 0;
-      }
-      my-wachtwoord{
-        margin: 0;
-        padding: 0;
-      }
-      my-logout{
-        margin: 0;
         padding: 0;
       }
     </style>
@@ -194,7 +185,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <a on-click="toggleWachtwoord" name="wijzigen_wachtwoord">Wijzigen wachtwoord</a>
             <a on-click="toggleLogout" name="logout">Uitloggen</a>
           </div>
-         
         </div>
       </div>
       
@@ -205,9 +195,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-dialog with-backdrop id="dialogWachtwoord">
         <my-wachtwoord></my-wachtwoord>
       </paper-dialog>
-
-    
-
   </app-toolbar>
       <!-- Main Content -->
       <iron-pages
@@ -215,17 +202,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         selected="[[_ar_page]]"
         fallback-selection="view404"
         role="main">
-        <!-- in iron-pages kun je niet handmatig een element selecteren.
-       	     Het is dus zinloos om te coderen selected=_ar_page met {{}}
-       	     Wel wordt _ar_selected_object gevuld met de sectie die hoort bij _ar_page
-       	     Via een observer kan hieruit de naam van het binnen de sectie horend
-       	     element bepaald worden gebruik makend van _ar_selected_object.attributes["element$"].nodeValue
-       	     en de titel via _ar_selected_object.title
-        -->
-
         <!-- sections voor iedereen -->
       
-        <!-- element$="none" of weglaten van element$ geeft beide aan dat er geen polymerElement gebruikt zal gaan worden -->
         <section page-name="home" title="HOME" element$="none">
           <div class="login">
           <paper-material elevation="1" verborgen$="[[!_are_strings_equal(_rol, 'undefined')]]">
@@ -261,24 +239,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- sections voor docent -->
 
  <!-- sections voor student -->
-          <section  page-name="student_medestudenten"
-                    title="OVERZICHT MEDESTUDENTEN"
-                    element$="my-medestudenten">
-            <paper-material elevation="1">
-              <!--
-                  c_visible="true" als deze section geselecteerd is.
-                  LET OP: boolean values moeten als string doorgegeven worden,
-                          vandaar de quotes rondom de function aanroep.
-                          De aanwezige literal waarde wordt met enkele quotes doorgegeven
-              -->
-              <my-medestudenten
-                c_visible="[[_are_strings_equal(_ar_page, 'student_medestudenten')]]"
-                c_rol="[[_rol]]"
-                c_username="[[_username]]">
-              </my-medestudenten>
-            </paper-material>
-          </section>
-
           <section  page-name="wijzigen_wachtwoord"
                     title="WIJZIGEN WACHTWOORD"
                     element$="my-wachtwoord">             
@@ -299,7 +259,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-material>
           </section>
         </iron-pages>
-
    </template>
   <script>
     (function() {
@@ -311,9 +270,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          xxxx  public               : two way external databinding {{xxxx}} - notify nodig
       */
       Polymer({
-        
         is: 'my-app',
-
         properties: {
           _c_baseURL: {
             type: String,
@@ -482,5 +439,4 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });   
     })();
   </script>
-
 </dom-module>
