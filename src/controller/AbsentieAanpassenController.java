@@ -56,6 +56,25 @@ public class AbsentieAanpassenController implements Handler
             String lJsonOut = lJsonObjectBuilder.build().toString();
             conversation.sendJSONMessage(lJsonOut);
         }
+        else if (lJsonObjIn != null && lJsonObjIn.containsKey("rol") && lJsonObjIn.getString("rol").equals("student"))
+        {
+            String lNummer = lJsonObjIn.getString("leerlingnummer");                            // Uitlezen van meegestuurde leerlingnummer
+            String lWachtwoord = lJsonObjIn.getString("password");                               //uitlezen van MD5 pass.
+            String status = lJsonObjIn.getString("status");
+
+            Student s = this.infoSys.getStudent(Integer.parseInt(lNummer));
+
+            if(s!=null && s.komtWachtwoordOvereen(lWachtwoord))
+            {
+                s.setStatus(status);
+            }
+            else
+            {
+                lJsonObjectBuilder.add("rol", "undefined"); //HA. FAKE LOGIN busted...
+            }
+            String lJsonOut = lJsonObjectBuilder.build().toString();
+            conversation.sendJSONMessage(lJsonOut);
+        }
     }
 
 }

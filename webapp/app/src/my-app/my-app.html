@@ -171,7 +171,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
 
       <div class="menu_rechts">
-      <a on-click="toggleOverzicht" name="overzicht_absentie" verborgen$="[[!_are_strings_equal(_rol, 'student')]]">
+      <a on-click="toggleOverzicht" name="overzicht_absentie" verborgen>
         <span>Overzicht absentie</span>
       </a> 
 
@@ -271,6 +271,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       */
       Polymer({
         is: 'my-app',
+
         properties: {
           _c_baseURL: {
             type: String,
@@ -433,8 +434,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.dialogWachtwoord.toggle();
         },
         toggleLogout: function () {
-          console.log(this.rol);
-          this.$.dialogLogout.toggle();
+	        window.location.href="/";
+          //this.$.dialogLogout.toggle();
         }
       });   
     })();

@@ -67,6 +67,7 @@ public class DetailsLadenController implements Handler {
                         lJsonObjectBuilder.add("eindtijd", data.getEndtime());
                         lJsonObjectBuilder.add("docentemail", data.getTeacher_email());
                         lJsonObjectBuilder.add("klas", s.getKlasnaam());
+                        lJsonObjectBuilder.add("status", s.getStatus());
                     }
 
                 }

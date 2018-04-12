@@ -106,8 +106,6 @@
 
                       <select on-change="_statusChange">
                             <option  selected$="{{selected(item.status,'aanwezig')}}" value="aanwezig">Aanwezig</option>
-                              <option selected$="{{selected(item.status,'afwezig')}}"  value="afwezig">Afwezig</option>
-                              <option selected$="{{selected(item.status,'gepland afwezig')}}"  value="gepland_afwezig">Gepland afwezig</option>
                               <option selected$="{{selected(item.status,'ziek')}}"  value="ziek">Ziek</option>
                       </select>
                     </td>
@@ -150,13 +148,12 @@
 
     <app-globals id="globalvars"></app-globals>
 
-    <scheduler-component timeFormat="h:mm" on-event-click="toggleDialog" default-view="agendaWeek" header='{"left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
+    <scheduler-component locale='nl' event-color="#aad8ed" text-color="#55666d" timeFormat="h:mm" on-event-click="toggleDialog" default-view="agendaWeek" header='{"left":"prev,next,today","right":"month,agendaWeek,agendaDay,listWeek"}'
       height=100% min-time="07:00:00" max-time="20:00:00" hidden-days='[0,6]'  events$='{{events}}'>
     </scheduler-component>
   </template>
   <script>
       (function () {
-        console.log("!!!");
         'use strict';
         /* _xxxx private              : geen external data binding      - geen notify
            _c_xx private constant     : geen external binding, constant - geen notify
@@ -225,15 +222,12 @@
               notify: true,
             },
             students: {
-            type: Array,
-            value: '[{"naam":"Test", "status":"aanwezig"}]'
+            type: Array
           }
           },
   
           attached: function () {
             this.rol = this.$.globalvars.data.rol;
-            console.log(this.rol + " - " + this._rol);
-            console.log('setting URL');
             // Here you would set your URL
           },
 
@@ -277,6 +271,11 @@
                   "rol": this._rol
                 };
                 this.$.ajax_rooster.generateRequest();
+              }
+              else if(newValue == "rooster" && this.$.globalvars.data.rol == "undefined")
+              {
+                  console.log(":(");
+                  window.location.href="/";
               }
               //this.$.getDevices.generateRequest();
             }

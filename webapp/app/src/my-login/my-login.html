@@ -115,7 +115,7 @@
           },
           username: {
             type: String,
-            value: "dietske.obbink@hu.nl",//"tristan.terhaar@student.hu.nl",              /* om snel te testen zonder steeds input te doen */
+            value: "tristan.terhaar@student.hu.nl",//"dietske.obbink@hu.nl",              /* om snel te testen zonder steeds input te doen */
             notify: true
           },
           voornaam: {
@@ -191,7 +191,7 @@
             this.voornaam = request.detail.response.voornaam;
             this.achternaam = request.detail.response.achternaam;
             this.klascode = request.detail.response.klascode;
-              this.$.globalvars.data.rol = this.rol;
+              this.$.globalvars.data.rol = request.detail.response.rol;
               if(this.rol == "student") this.$.globalvars.data.leerlingnummer = this.identificatienummer;
               else if(this.rol == "docent") this.$.globalvars.data.leerlingnummer = this.username;
               this.$.globalvars.data.wachtwoord = $.md5(this._password);

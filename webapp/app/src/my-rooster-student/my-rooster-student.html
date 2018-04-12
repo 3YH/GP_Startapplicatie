@@ -13,6 +13,9 @@
       :host {
         display: block;
       }
+      [verborgen]{                 /* als verborgen true is dan ..     */
+        display: none;							/* onzichtbaar maken                */
+      }
 
       span {
         @apply --paper-font-body1;
@@ -64,14 +67,17 @@
               class="my-button"
               id="button_afwezig_melden"
               on-click="_verander_status_aanwezigheid"
-              raised>
+              raised
+              verborgen$="{{is_ziek}}"
+            >
                 Afwezig melden
             </paper-button>
             <paper-button
               class="my-button"
               id="button_ziek_melden"
               on-click="_verander_status_gezondheid"
-              raised>
+              raised
+            >
                 Ziek melden
             </paper-button>
           </div>
@@ -92,6 +98,15 @@
             debounce-duration="1000"
             last-response="{{response}}"></iron-ajax>
 
+
+    <iron-ajax
+            id="absentie_aanpassen"
+            method="POST"
+            url="/absentie/aanpassen"
+            handle-as="json"
+            debounce-duration="1000"
+            last-response="{{response}}"></iron-ajax>
+
     <iron-ajax
             id="ajax_details"
             method="POST"
@@ -108,8 +123,6 @@
   </template>
   <script>
     (function () {
-
-        console.log("!!!");
       'use strict';
       /* _xxxx private              : geen external data binding      - geen notify
          _c_xx private constant     : geen external binding, constant - geen notify
@@ -118,13 +131,31 @@
       */
       Polymer({
         is: 'my-rooster-student',
+
+        is_ziek : function()
+        {
+            if(this.status=="ziek")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        },
+
         properties: {
-          rol: {
-            type: String,
-              value: 'undefined',
-              observer: '_activeChanged',
-            notify: true,
-          },
+            rol: {
+                type: String,
+                value: 'undefined',
+                observer: '_activeChanged',
+                notify: true,
+            },
+            verborgen: {
+                type: Boolean,
+                value: false,
+            },
           cursuscode: {
             type: String,
             value: '',
@@ -160,6 +191,11 @@
             value: '',
             notify: true,
           },
+            status: {
+                type: String,
+                value: '',
+                notify: true,
+            },
           passthrough: {
               type: String,
               value: 'leeeeg',
@@ -175,9 +211,6 @@
 
           attached: function() {
               this.rol = this.$.globalvars.data.rol;
-              console.log(this.rol + " - " + this._rol);
-              console.log('setting URL');
-              // Here you would set your URL
           },
 
           _activeChanged: function(newValue, oldValue) {
@@ -187,7 +220,6 @@
                       this.rol=this.$.globalvars.data.rol;
                       this._rol = this.$.globalvars.data.rol;
                       this.identificatienummer = this.$.globalvars.data.leerlingnummer;
-                      console.log(this.$.globalvars.data.rol);
 
                       this.$.ajax_rooster.contentType="application/json";
                       this.$.ajax_rooster.body={
@@ -197,7 +229,6 @@
                       };
                       this.$.ajax_rooster.generateRequest();
                   }
-                  //this.$.getDevices.generateRequest();
               }
           },
 
@@ -226,11 +257,27 @@
         _verander_status_gezondheid: function() {
           var button = this.$.button_ziek_melden;
           if(button.textContent == "Beter melden") {
+              this.$.absentie_aanpassen.contentType="application/json";
+              this.$.absentie_aanpassen.body={
+                  "leerlingnummer":this.identificatienummer,
+                  "password":this.$.globalvars.data.wachtwoord,
+                  "rol":this._rol,
+                  "status":"aanwezig",
+              };
+              this.$.absentie_aanpassen.generateRequest();
             button.textContent = "Ziek melden";
             this.$.betermelding.open();
           }
           else  {
             button.textContent = "Beter melden";
+              this.$.absentie_aanpassen.contentType="application/json";
+              this.$.absentie_aanpassen.body={
+                  "leerlingnummer":this.identificatienummer,
+                  "password":this.$.globalvars.data.wachtwoord,
+                  "rol":this._rol,
+                  "status":"ziek",
+              };
+              this.$.absentie_aanpassen.generateRequest();
             this.$.ziekmelding.open();
           }
         },
@@ -250,6 +297,22 @@
               this.klas = request.detail.response.klas;
               this.lokaal = request.detail.response.lokaal;
               this.starttijd = request.detail.response.starttijd;
+              this.status = request.detail.response.status;
+
+              if(this.status != "aanwezig")
+              {
+                  if(this.status == "afwezig" || this.status=="gepland_afwezig")
+                  {
+                      var button = this.$.button_afwezig_melden;
+                      button.textContent="Aanwezig melden";
+                  }
+                  if(this.status=="ziek")
+                  {
+                      var button = this.$.button_ziek_melden;
+                      button.textContent = "Beter melden";
+                  }
+              }
+
               //console.log(request.detail.response.events.replace('\\', ''));
               this.$.dialog.toggle();   //display dialog! :D
           },
