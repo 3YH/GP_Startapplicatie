@@ -7,6 +7,7 @@
 <link rel="import" href="../my-presentielijst/my-presentielijst.html">
 <link rel="import" href="../my-app/shared-styles.html">
 <link rel="import" href="../app-globals/app-globals.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
 
 <dom-module id="my-rooster-docent">
   <template>
@@ -98,17 +99,17 @@
                       <th>Naam</th>
                       <th>Status</th>
                     </tr>
-                <template is="dom-repeat" items="{{students}}">
+                <template is="dom-repeat" items="{{students}}" observe="selected">
                   <tr>
                       <td>{{item.naam}}</td>
-                      <td class="aanwezig">
-                          {{item.status}}
-                      <!-- <select>
-                        <option value="aanwezig">Aanwezig</option>
-                        <option value="afwezig">Afwezig</option>
-                        <option value="gepland_afwezig">Gepland afwezig</option>
-                        <option value="ziek">Ziek</option>
-                      </select> -->
+                      <td class$="{{item.status}}">
+
+                      <select on-change="_statusChange">
+                            <option  selected$="{{selected(item.status,'aanwezig')}}" value="aanwezig">Aanwezig</option>
+                              <option selected$="{{selected(item.status,'afwezig')}}"  value="afwezig">Afwezig</option>
+                              <option selected$="{{selected(item.status,'gepland afwezig')}}"  value="gepland_afwezig">Gepland afwezig</option>
+                              <option selected$="{{selected(item.status,'ziek')}}"  value="ziek">Ziek</option>
+                      </select>
                     </td>
                     </tr>
                 </template>
@@ -128,6 +129,15 @@
     on-response="_ophalen_rooster_response_handler"
     debounce-duration="1000" 
     last-response="{{response}}"></iron-ajax>
+
+
+      <iron-ajax
+              id="absentie_aanpassen"
+              method="POST"
+              url="/absentie/aanpassen"
+              handle-as="json"
+              debounce-duration="1000"
+              last-response="{{response}}"></iron-ajax>
 
     <iron-ajax 
     id="ajax_details" 
@@ -155,8 +165,13 @@
         */
         Polymer({
           is: 'my-rooster-docent',
-  
+
           properties: {
+              selectvalue: {
+                  type: String,
+                  observer: '_statusChange',
+                  notify: true,
+              },
             rol: {
               type: String,
               value: 'undefined',
@@ -221,7 +236,32 @@
             console.log('setting URL');
             // Here you would set your URL
           },
-  
+
+            selected: function(item, type){
+                return type == item;
+            },
+
+            _statusChange:  function (newValue, oldValue, target) {
+                var naam = $(newValue.target.parentNode.parentNode).children("td")["0"].textContent;
+                var value = $(newValue.target).val();
+                console.log("Gebruiker: " + naam + " heeft waarde: " + value);
+
+                this.$.absentie_aanpassen.contentType = "application/json";
+                this.$.absentie_aanpassen.body = {
+                    "username": this.identificatienummer,
+                    "password": this.$.globalvars.data.wachtwoord,
+                    "rol": this._rol,
+                    "naam":naam,
+                    "waarde":value,
+                    "vak":this.cursuscode,
+                    "klas":this.klas
+                };
+                this.$.absentie_aanpassen.generateRequest();
+
+                //console.log($(newValue.target.parentNode.parentNode).children("td").first()["0"].textContent);
+
+            },
+
           _activeChanged: function (newValue, oldValue) {
             if (newValue) {
               if (newValue == "rooster" && this.$.globalvars.data.rol == "docent") {
